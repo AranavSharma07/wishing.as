@@ -1,20 +1,22 @@
-# WishingASR v45 — Responsive Production Source
+# WishingASR v46 — Responsive Production Source
 
-Static HTML/CSS/JavaScript site intended for Vercel deployment.
+Static HTML/CSS/JavaScript website for Vercel deployment.
 
 ## Deploy
 1. Extract the ZIP.
-2. Upload the contents of this folder (not the ZIP archive itself) to the root of the GitHub repository.
+2. Upload the contents of this folder (not the ZIP archive itself) to the root of your GitHub repository.
 3. Commit changes and wait for Vercel to deploy.
-4. Hard-refresh the site and test the smoke-test list in `QA_REPORT.md`.
+4. Open the Vercel deployment and hard-refresh the site to clear older cached JavaScript.
+5. Run the checks listed in `QA_REPORT.md`.
 
 ## Windows preview
-Requires Python 3. Open `START_LOCAL_PREVIEW.bat`. Keep the terminal open and visit the localhost URL printed there. The preview server maps the Vercel-style routes to static files.
+Requires Python 3. Open `START_LOCAL_PREVIEW.bat`, keep the terminal open and visit the localhost URL it prints.
 
-## What's in v45
-- Calendar date selection now displays the selected occasion, date and a direct Create wish action. Non-occasion dates provide an Explore occasions action.
-- Month arrows, Today navigation, selected-date accessibility and invalid date handling are improved and covered by runtime regression tests.
-- Retains v44's tools bug fixes, updated festival dates, SEO/social metadata, keyboard skip navigation, storage safety, Vercel response headers and branded 404 page.
+## What's new in v46
+- Critical startup crash fixed by restoring `renderOccasions()` and `fillSelect()`. This restores festival cards, category filters, occasion dropdown options and calendar initialization.
+- Added the missing Buddha Purnima calendar date (20 May 2027).
+- Calendar date markers, month navigation, Today, selected-event details and Create wish flow are browser-tested.
+- Greeting creator, image upload/export, tools, mobile navigation, SEO, routes and security settings are included in the full regression run.
 
 ## QA
-Run `python qa_static.py` from this folder. It runs static checks plus calendar, tools and card-layout runtime regression checks. The browser-specific checklist and known limitations are in `QA_REPORT.md`.
+Run `python qa_static.py` from this folder. It includes static checks plus deterministic calendar, tools and card-layout runtime tests. `QA_REPORT.md` documents the Chromium checks and remaining live-device verification.

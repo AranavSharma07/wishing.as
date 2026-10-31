@@ -1983,7 +1983,7 @@ button:disabled{opacity:.7;cursor:wait;transform:none!important}
 .skip-link:focus{transform:translateY(0);outline:2px solid #ffd38b;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
 
-/* v45 calendar interaction polish: clear selected-date feedback and visible next actions. */
+/* v46 calendar interaction polish: clear selected-date feedback and visible next actions. */
 .calendar-empty{pointer-events:none;background:transparent;border:0;min-height:0}
 .calendar-selection{display:flex;align-items:flex-start;gap:13px;margin-top:16px;padding:15px 16px;border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:15px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,rgba(255,255,255,.025)),rgba(255,255,255,.018));min-width:0}
 .calendar-selection-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:12px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);font-size:19px}

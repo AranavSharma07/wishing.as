@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '45'
+VERSION = '46'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -126,7 +126,12 @@ else:
 
 # Critical calendar dates are tracked explicitly as known regression checks.
 app = (ROOT/'app.js').read_text(encoding='utf-8')
+for required_function in ('function renderOccasions(', 'function fillSelect('):
+    if required_function not in app:
+        errors.append(f'app.js: critical startup function missing: {required_function}')
 for marker in [
+    "date:'2027-05-20'",  # Buddha Purnima (India, 2027)
+
     "date:'2027-08-25'",  # Janmashtami
     "date:'2027-09-04'",  # Ganesh Chaturthi
     "date:'2027-09-30'",  # Sharad Navratri
