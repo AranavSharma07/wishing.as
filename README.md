@@ -1,4 +1,4 @@
-# WishingASR v44 — Responsive Production Source
+# WishingASR v45 — Responsive Production Source
 
 Static HTML/CSS/JavaScript site intended for Vercel deployment.
 
@@ -11,12 +11,10 @@ Static HTML/CSS/JavaScript site intended for Vercel deployment.
 ## Windows preview
 Requires Python 3. Open `START_LOCAL_PREVIEW.bat`. Keep the terminal open and visit the localhost URL printed there. The preview server maps the Vercel-style routes to static files.
 
-## What's in v44
-- Fixed real tools bugs involving placeholder copy actions, clipboard fallback reporting and malformed saved-wish storage.
-- Corrected upcoming Indian festival calendar entries; regional and lunar observances may still vary.
-- Keyboard skip navigation, consistent social-sharing metadata and a branded 1200 × 630 social preview.
-- Stronger Vercel security headers and improved static-asset caching.
-- Branded 404 page and refreshed sitemap.
-- Repeatable static, canvas and tools-runtime QA scripts.
+## What's in v45
+- Calendar date selection now displays the selected occasion, date and a direct Create wish action. Non-occasion dates provide an Explore occasions action.
+- Month arrows, Today navigation, selected-date accessibility and invalid date handling are improved and covered by runtime regression tests.
+- Retains v44's tools bug fixes, updated festival dates, SEO/social metadata, keyboard skip navigation, storage safety, Vercel response headers and branded 404 page.
 
-See `QA_REPORT.md` for tests completed and limitations.
+## QA
+Run `python qa_static.py` from this folder. It runs static checks plus calendar, tools and card-layout runtime regression checks. The browser-specific checklist and known limitations are in `QA_REPORT.md`.

@@ -38,7 +38,7 @@ for port in list(range(8787, 8800)) + [0]:
         continue
 if server is None:
     raise SystemExit('Could not open a local preview port. Close other local servers and retry.')
-print(f'WishingASR Responsive Preview v43: http://127.0.0.1:{server.server_port}/')
+print(f'WishingASR Responsive Preview v45: http://127.0.0.1:{server.server_port}/')
 print('Keep this window open. Press Ctrl+C to stop.')
 try:
     server.serve_forever()

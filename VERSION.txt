@@ -1,3 +1,2 @@
-WishingASR v44.0
+WishingASR v45.0
 Release date: 2026-10-31
-

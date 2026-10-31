@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '44'
+VERSION = '45'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -86,7 +86,7 @@ for script in ('app.js','tools.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs'
     if script.endswith('.js'):
         result = subprocess.run(['node','--check',str(ROOT/script)],capture_output=True,text=True)
         if result.returncode: errors.append(f'{script}: syntax error: {result.stderr.strip()}')
-for script in ('qa_canvas_layout.cjs','qa_tools_runtime.cjs'):
+for script in ('qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs'):
     result = subprocess.run(['node',str(ROOT/script)],capture_output=True,text=True)
     if result.returncode: errors.append(f'{script}: failed: {result.stderr.strip()}')
 
@@ -135,6 +135,18 @@ for marker in [
 ]:
     if marker not in app: errors.append(f'app.js: missing corrected calendar date {marker}')
 
+
+for marker in [
+    'id="calendarSelection"',
+    'function renderCalendarSelection(',
+    'data-calendar-create=',
+    'data-calendar-explore',
+    'aria-pressed=',
+    'const changeCalendarMonth=',
+]:
+    if marker not in (app + (ROOT/'index.html').read_text(encoding='utf-8')):
+        errors.append(f'calendar: missing interaction feature {marker}')
+
 # Regressions fixed in the tools interface.
 tools = (ROOT/'tools.js').read_text(encoding='utf-8')
 for marker in ["invitationReady", "captionReady", "Array.isArray(value)", "document.execCommand('copy')===true"]:
@@ -144,4 +156,4 @@ if errors:
     print('FAIL')
     print('\n'.join(f'- {item}' for item in errors))
     sys.exit(1)
-print('PASS: HTML semantics/accessibility, labels and links, SEO/social metadata, JS syntax, canvas QA, tools runtime regressions, calendar dates, sitemap, Vercel routes/security/cache rules.')
+print('PASS: HTML semantics/accessibility, labels and links, SEO/social metadata, JS syntax, canvas QA, tools runtime regressions, calendar date-selection runtime, sitemap, Vercel routes/security/cache rules.')

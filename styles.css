@@ -1982,3 +1982,21 @@ button:disabled{opacity:.7;cursor:wait;transform:none!important}
 .skip-link{position:fixed;z-index:10000;top:12px;left:12px;transform:translateY(-160%);padding:12px 18px;border:1px solid rgba(255,211,139,.55);border-radius:12px;background:#111827;color:#fff;font:600 14px/1.2 "DM Sans",Arial,sans-serif;text-decoration:none;box-shadow:0 12px 32px rgba(0,0,0,.35);transition:transform .18s ease}
 .skip-link:focus{transform:translateY(0);outline:2px solid #ffd38b;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
+
+/* v45 calendar interaction polish: clear selected-date feedback and visible next actions. */
+.calendar-empty{pointer-events:none;background:transparent;border:0;min-height:0}
+.calendar-selection{display:flex;align-items:flex-start;gap:13px;margin-top:16px;padding:15px 16px;border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:15px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,rgba(255,255,255,.025)),rgba(255,255,255,.018));min-width:0}
+.calendar-selection-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:12px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);font-size:19px}
+.calendar-selection>div,.calendar-selection-content{flex:1 1 auto;min-width:0}
+.calendar-selection strong{display:block;color:#f5f5fb;font-size:12px;line-height:1.4;margin:1px 0 4px}
+.calendar-selection p{margin:0;color:var(--muted);font-size:10px;line-height:1.65}
+.calendar-selection .eyebrow{font-size:8px;letter-spacing:1.35px;margin:0 0 6px}
+.calendar-event-detail{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:10px;margin-top:10px;border-top:1px solid rgba(255,255,255,.075)}
+.calendar-event-detail>div{min-width:0}
+.calendar-event-detail>div strong{margin:0 0 3px;font-size:13px}
+.calendar-event-detail>div p{font-size:10px}
+.calendar-create-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:0 0 auto;min-height:38px;padding:8px 12px;border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);border-radius:10px;background:color-mix(in srgb,var(--accent) 13%,transparent);color:var(--accent);font-size:10px;font-weight:700;cursor:pointer;transition:background .2s,transform .2s,border-color .2s}
+.calendar-create-button:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent);transform:translateY(-1px)}
+.day-cell[aria-pressed="true"]{outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:1px}
+.day-cell:focus-visible{z-index:1;outline:3px solid var(--accent);outline-offset:2px}
+@media(max-width:480px){.calendar-selection{padding:13px 12px;gap:10px}.calendar-selection-icon{width:32px;height:32px;flex-basis:32px}.calendar-event-detail{align-items:flex-start;flex-direction:column;gap:8px}.calendar-create-button{width:100%}}
