@@ -1,4 +1,4 @@
-# WishingASR v43 — Responsive Production Source
+# WishingASR v44 — Responsive Production Source
 
 Static HTML/CSS/JavaScript site intended for Vercel deployment.
 
@@ -11,12 +11,12 @@ Static HTML/CSS/JavaScript site intended for Vercel deployment.
 ## Windows preview
 Requires Python 3. Open `START_LOCAL_PREVIEW.bat`. Keep the terminal open and visit the localhost URL printed there. The preview server maps the Vercel-style routes to static files.
 
-## What's in v43
-- Shared cache versions across all HTML pages.
-- More defensive card wrapping, fitted title/signature text and separated vertical lanes in PNG exports.
-- Local photo downscaling to a maximum 1800 px edge to reduce memory use on mobile devices.
-- Protection against duplicate card download/share actions.
-- Responsive small-screen layouts for cards, creator form, calendar, navigation, quote/tool pages and mobile tap targets.
-- Search remains intentionally removed; browse occasions by category.
+## What's in v44
+- Fixed real tools bugs involving placeholder copy actions, clipboard fallback reporting and malformed saved-wish storage.
+- Corrected upcoming Indian festival calendar entries; regional and lunar observances may still vary.
+- Keyboard skip navigation, consistent social-sharing metadata and a branded 1200 × 630 social preview.
+- Stronger Vercel security headers and improved static-asset caching.
+- Branded 404 page and refreshed sitemap.
+- Repeatable static, canvas and tools-runtime QA scripts.
 
 See `QA_REPORT.md` for tests completed and limitations.

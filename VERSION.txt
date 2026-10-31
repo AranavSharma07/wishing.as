@@ -1,2 +1,3 @@
-WishingASR v43
-Responsive Production Source + Windows Local Preview
+WishingASR v44.0
+Release date: 2026-10-31
+

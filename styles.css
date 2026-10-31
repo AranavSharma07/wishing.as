@@ -1976,3 +1976,9 @@ button:disabled{opacity:.7;cursor:wait;transform:none!important}
 @media(prefers-reduced-motion:reduce){
  .hero-character img,.hero-character,.wish-preview .preview-icon,.hero-art .motion-particle{animation:none!important;transition:none!important}
 }
+
+
+/* v44 accessibility: keyboard users can bypass repeated navigation. */
+.skip-link{position:fixed;z-index:10000;top:12px;left:12px;transform:translateY(-160%);padding:12px 18px;border:1px solid rgba(255,211,139,.55);border-radius:12px;background:#111827;color:#fff;font:600 14px/1.2 "DM Sans",Arial,sans-serif;text-decoration:none;box-shadow:0 12px 32px rgba(0,0,0,.35);transition:transform .18s ease}
+.skip-link:focus{transform:translateY(0);outline:2px solid #ffd38b;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
