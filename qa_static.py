@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '61'
+VERSION = '63'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -235,7 +235,7 @@ for slug in ('diwali-wishes', 'birthday-wishes', 'christmas-wishes', 'holi-wishe
         content=page.read_text(encoding='utf-8')
         for token in ('rel="canonical"','name="description"','property="og:title"','copy-wish','wish-share-inline','href="/create?occasion='):
             if token not in content: errors.append(f'{page.name}: missing guide feature {token}')
-if 'growth.js?v=61' not in (ROOT/'index.html').read_text(encoding='utf-8'):
+if 'growth.js?v=63' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing growth helper script')
 if '"@type":"Organization"' not in (ROOT/'index.html').read_text(encoding='utf-8') or 'AA Group' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing AA Group Organization structured data')

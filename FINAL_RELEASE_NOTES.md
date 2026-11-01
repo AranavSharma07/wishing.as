@@ -1,24 +1,19 @@
-# WishingASR v61 — AA Group Portrait & Complete Visual Refresh
+# WishingASR v63 — Navigation & Wish Form Overlap Fix
 
-## AS owner profile
-- Added the user-provided portrait to the public AS owner profile.
-- Optimized the portrait to WebP (~52 KB) at 640px max edge.
-- Updated the AA Group company page, About page and homepage team/profile section.
-- Preserved the public display name/initials as AS; no additional identity details were invented.
+## Fixes based on the supplied v61 screenshot
+- Prevented the Home navigation item from colliding with the WishingASR brand.
+- Added a compact navigation mode below 1280px using the existing hamburger menu and `.open` state.
+- Kept the desktop navigation in its own flex area with non-overlapping brand and nav regions.
+- Rebuilt the wish creator form grid with explicit minmax(0,1fr) columns, full-width controls and safe box sizing.
+- Switched the form to a single-column field layout on narrow mobile screens.
+- Improved the occasion selector step layout to prevent label/control squeezing.
+- Kept preview column responsive and prevented horizontal overflow.
+- Standardized local CSS/JS cache query versions to v63.
 
-## Site-wide visual refresh
-- Introduced a unified premium design layer across all HTML pages.
-- Refined page backgrounds, navigation glass treatment, typography, heading balance, buttons, card surfaces, focus states and interaction transitions.
-- Preserved occasion-specific colour themes, existing 20 greeting card designs and 9 creative tools.
-- Improved AA Group's company page with a neutral corporate theme.
-- Refined responsive layouts for desktop, tablet and small-screen devices.
-- Added consistent touch/keyboard focus treatment and reduced-motion support.
+## Preserved
+- All previous pages, AA Group branding, AS portrait, 20 card styles, 9 tools, character illustrations, seasonal themes, calendar, wish generation, photo upload, PNG export and sharing.
 
-## Performance and delivery
-- Optimized profile image and retained lazy loading/async decoding.
-- Unified cache query versions across local styles/scripts.
-- Preserved original hero-character fallback and all existing features.
-
-## Verification
-- Static QA and all retained runtime regression suites are included and run.
-- Live browser, deployed Vercel and physical device checks are still required for final visual certification.
+## Validation
+- Existing static and runtime regression suites retained and run.
+- CSS parsing and ZIP integrity checked.
+- Browser-driven visual testing and physical-device verification remain necessary.
