@@ -1,10 +1,8 @@
-# QA Report — v59
+# QA Report — v61
 
-- Source package based on v58 AA Group corporate release.
-- Preserved 20 card styles, nine tool themes, AA Group company page and AS initials-only owner profile.
-- Added responsive cinematic polish, keyboard focus treatment, touch-friendly interactions and reduced-motion support.
-- Added native image lazy-loading/async decoding where applicable; hero images retain high priority.
-- Standardized local CSS/JS cache query versions.
-- Existing QA scripts are retained in the release.
-- ZIP integrity verified after packaging.
-- Live Vercel, external font/CDN, and physical Android/iOS testing remain required.
+- Verified AS owner profile image is present on homepage, About and AA Group pages.
+- Optimized portrait asset is WebP at approximately 52 KB.
+- Static HTML/accessibility/SEO/routes/security/cache audit is included.
+- Calendar, canvas layout, tools and growth runtime regression suites are included.
+- CSS/JS syntax and ZIP integrity checked.
+- Live Vercel, external font delivery, and physical Android/iOS/desktop rendering still require deployment testing.

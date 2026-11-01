@@ -4,7 +4,7 @@ WishingASR is a product of AA Group. This static site includes personalised wish
 
 ## AA Group page
 - Public route: `/aa-group`
-- Owner display name: `AS` (initials-only profile; no portrait displayed)
+- Owner display name: `AS` (AS public owner profile with optimized portrait; no portrait displayed)
 - Existing team portraits are compact and scaled by their stated roles.
 
 ## Local preview

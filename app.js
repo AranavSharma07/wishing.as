@@ -213,7 +213,7 @@ function applyFestivalMotion(id){
  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const narrowMotion=window.matchMedia('(max-width:640px)').matches;
  const tabletMotion=window.matchMedia('(max-width:1024px)').matches;
- const particleCount=reduceMotion?0:(narrowMotion?8:(tabletMotion?14:22));
+ const particleCount=reduceMotion?0:(narrowMotion?5:(tabletMotion?8:12));
  const particleSymbols=motion==='snow'?['❄','❅','❆','·','❄','❅']:motion==='petals'?['🌸','✿','❀','✿','🌼']:motion==='confetti'?['✦','🎊','✧','●','🎉']:motion==='colour'?['●','●','✿','●','🎨']:set;
  art.dataset.motion=motion;
  art.dataset.motionTheme=id;

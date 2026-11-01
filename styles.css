@@ -4828,3 +4828,245 @@ svg,canvas,video{max-width:100%}
   html{scroll-behavior:auto}
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* v60 — seasonal accessory alignment and character lighting correction */
+.hero-character img{
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.19)) saturate(1.015) brightness(.985) contrast(1.015);
+}
+.hero-character:hover{
+  filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 14%,transparent));
+}
+.hero-character .seasonal-accessory{z-index:8}
+.hero-character .accessory-hand{
+  font-size:clamp(16px,1.85vw,23px);
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.28));
+  animation:seasonal-hand-bob 4.2s ease-in-out infinite;
+}
+.hero-character-stage[data-occasion="diwali"] .accessory-hand{
+  font-size:clamp(18px,2.1vw,25px);
+  filter:drop-shadow(0 0 4px rgba(255,176,63,.42)) drop-shadow(0 2px 3px rgba(0,0,0,.28));
+}
+.hero-character-stage[data-occasion="christmas"] .accessory-hand{
+  font-size:clamp(16px,1.8vw,22px);
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));
+}
+/* A fuller, softer Santa cap: rounded red cone, white cuff and pom-pom. */
+.hero-character .accessory-hat-santa{
+  top:-2.2%;
+  left:41%;
+  width:29px;
+  height:35px;
+  border:0;
+  background:linear-gradient(145deg,#f05a62 0%,#c9233d 72%,#a71935 100%);
+  clip-path:polygon(48% 0,100% 100%,0 100%);
+  transform:rotate(17deg);
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.28));
+}
+.hero-character .accessory-hat-santa::before{
+  content:"";
+  position:absolute;
+  width:9px;height:9px;
+  right:-2px;top:-1px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0 35%,#e9e8e5 75%);
+  box-shadow:0 1px 3px rgba(0,0,0,.18);
+}
+.hero-character .accessory-hat-santa::after{
+  content:"";
+  position:absolute;
+  width:31px;height:7px;
+  left:-1px;bottom:-1px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#fff 0%,#e9e8e8 100%);
+  box-shadow:0 1px 2px rgba(0,0,0,.16);
+}
+.hero-character-girl .accessory-hat-santa{left:44%;top:-1.6%;transform:rotate(13deg) scale(.94)}
+.hero-character .accessory-hat-party{
+  width:27px;height:30px;
+  border:0;
+  background:linear-gradient(145deg,#ffe09a,#e5a63d);
+  clip-path:polygon(48% 0,100% 100%,0 100%);
+}
+.hero-character .accessory-hat-party::after{
+  width:29px;height:6px;left:-1px;bottom:-1px;border-radius:999px;
+  background:#fff0d4;
+}
+.hero-art .festival-motion{opacity:.22}
+.hero-art .motion-particle{
+  filter:drop-shadow(0 0 4px color-mix(in srgb,var(--accent) 22%,transparent));
+  will-change:auto;
+}
+.hero-art .festival-motion[data-motion="snow"] .motion-particle{opacity:.36}
+.hero-art .festival-motion[data-motion="snow"] .particle-4{opacity:.24}
+@media(max-width:800px){
+  .hero-character .accessory-hat-santa{width:25px;height:31px;left:41%;top:-2%}
+  .hero-character-girl .accessory-hat-santa{left:44%}
+  .hero-character .accessory-hand{font-size:clamp(15px,3vw,20px)}
+}
+@media(max-width:560px){
+  .hero-character-boy .accessory-hand-left{left:1%;top:21%}
+  .hero-character-boy .accessory-hand-right{right:0%;top:33%}
+  .hero-character-girl .accessory-hand-left{left:0%;top:27%}
+  .hero-character-girl .accessory-hand-right{right:0%;top:23%}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-character .seasonal-accessory{animation:none!important}
+}
+
+
+/* v61 — unified AA Group design system refresh */
+:root{
+  --aa-gold:#e8c78c;
+  --aa-gold-soft:#f5dfb4;
+  --aa-rose:#d98ba5;
+  --aa-line:color-mix(in srgb,var(--text) 12%,transparent);
+  --aa-glass:color-mix(in srgb,var(--surface) 88%,transparent);
+  --aa-shadow:0 22px 60px rgba(0,0,0,.22);
+  --aa-ease:cubic-bezier(.2,.72,.22,1);
+  --radius:24px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  background:
+    radial-gradient(ellipse at 8% 0%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 34%),
+    radial-gradient(ellipse at 96% 20%,color-mix(in srgb,var(--accent2) 7%,transparent),transparent 31%),
+    var(--bg);
+  color:var(--text);
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+h1,h2,h3,h4{letter-spacing:-.025em;text-wrap:balance}
+p,li{ text-wrap:pretty }
+::selection{background:color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text)}
+img{max-width:100%;height:auto}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+:where(a,button,[role="button"],input,select,textarea):focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent);
+}
+.site-header{
+  width:min(calc(100% - 28px),1320px);
+  max-width:1320px;
+  margin:10px auto 0;
+  padding:13px clamp(14px,2.2vw,28px);
+  border:1px solid var(--aa-line);
+  border-radius:22px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  box-shadow:0 10px 34px rgba(0,0,0,.12);
+  backdrop-filter:blur(22px) saturate(1.12);
+  -webkit-backdrop-filter:blur(22px) saturate(1.12);
+}
+.site-header .brand{flex-shrink:0}
+.site-header nav{gap:clamp(4px,.65vw,10px)}
+.site-header nav a{
+  border-radius:999px;
+  transition:background .2s ease,color .2s ease,transform .2s var(--aa-ease),border-color .2s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  .site-header nav a:hover{background:color-mix(in srgb,var(--accent) 10%,transparent);transform:translateY(-1px)}
+}
+.site-header nav a[aria-current="page"]{background:color-mix(in srgb,var(--accent) 13%,transparent)}
+.nav-cta,.button-primary{
+  box-shadow:0 8px 24px color-mix(in srgb,var(--accent) 15%,transparent);
+}
+.button,.btn,.button-primary,.button-ghost,.nav-cta{
+  border-radius:14px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  transition:transform .18s var(--aa-ease),box-shadow .2s ease,filter .2s ease,background .2s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  .button:hover,.btn:hover,.nav-cta:hover{filter:brightness(1.045);box-shadow:0 12px 28px rgba(0,0,0,.18)}
+}
+.button:active,.btn:active,button:active{transform:translateY(1px) scale(.99)}
+.site-footer{
+  border-top:1px solid var(--aa-line);
+  margin-top:clamp(50px,8vw,100px);
+  padding-top:clamp(34px,5vw,58px);
+}
+.footer-main,.footer-bottom{border-color:var(--aa-line)}
+:where(.occasion-card,.national-occasion-card,.national-card,.premium-feature-card,.popular-wish-card,.quote-card,.tool-card,.founder-card,.guide-article,.feature-card,.contact-card){
+  border:1px solid var(--aa-line);
+  border-radius:20px;
+  box-shadow:0 12px 38px rgba(0,0,0,.10);
+  transition:transform .24s var(--aa-ease),border-color .24s ease,box-shadow .24s ease,background .24s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  :where(.occasion-card,.national-occasion-card,.national-card,.premium-feature-card,.popular-wish-card,.quote-card,.tool-card,.founder-card,.guide-article,.feature-card,.contact-card):hover{
+    transform:translate3d(0,-3px,0);
+    border-color:color-mix(in srgb,var(--accent) 32%,var(--aa-line));
+    box-shadow:0 20px 44px rgba(0,0,0,.18);
+  }
+}
+.section-block{scroll-margin-top:100px}
+.section-heading{gap:clamp(16px,3vw,36px)}
+.section-heading h2,.section-intro h2,.content-page h1,.legal h1{
+  line-height:1.08;
+  text-wrap:balance;
+}
+:where(.hero-description,.section-intro p,.guide-article p,.legal p,.content-page p){
+  line-height:1.78;
+}
+:where(input,select,textarea,.form-control){
+  border-radius:13px;
+  border-color:var(--aa-line);
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+:where(input,select,textarea,.form-control):focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 13%,transparent);
+}
+.aa-owner-photo{
+  flex:0 0 clamp(88px,12vw,126px);
+  width:clamp(88px,12vw,126px);
+  height:clamp(88px,12vw,126px);
+  object-fit:cover;
+  object-position:50% 25%;
+  border:1px solid rgba(255,219,170,.5);
+  border-radius:25px;
+  box-shadow:0 12px 30px rgba(0,0,0,.24);
+}
+.profile-owner-photo{
+  flex:0 0 var(--profile-size,76px);
+  width:var(--profile-size,76px);
+  height:var(--profile-size,76px);
+  object-fit:cover;
+  object-position:50% 23%;
+  border-radius:16px;
+  border:1px solid rgba(255,214,155,.36);
+  box-shadow:0 8px 22px rgba(0,0,0,.20);
+}
+.profile-owner{--profile-size:76px}
+@media(max-width:980px){
+  .site-header{width:calc(100% - 22px)}
+}
+@media(max-width:720px){
+  html{scroll-padding-top:78px}
+  .site-header{margin:7px auto 0;padding:11px 13px;border-radius:18px}
+  .site-header nav{border:1px solid var(--aa-line);border-radius:18px;background:color-mix(in srgb,var(--surface) 96%,transparent);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+  .site-header nav a{padding:12px 14px}
+  .section-block{padding-top:clamp(48px,10vw,72px);padding-bottom:clamp(48px,10vw,72px)}
+  .section-heading{align-items:flex-start;flex-direction:column}
+  .founder-card{align-items:center}
+  .aa-owner-photo{width:88px;height:88px;flex-basis:88px;border-radius:20px}
+}
+@media(max-width:420px){
+  .site-header{width:calc(100% - 14px);padding:9px 10px}
+  .site-header .brand-word{font-size:15px}
+  .hero-title{font-size:clamp(38px,11vw,52px)}
+  .aa-page{width:calc(100% - 20px)}
+  .aa-owner-card{flex-direction:row;align-items:center}
+  .aa-owner-photo{width:76px;height:76px;flex-basis:76px;border-radius:17px}
+  .profile-owner-photo{width:70px;height:70px;flex-basis:70px}
+  .profile-owner{--profile-size:70px}
+}
+@media(hover:none),(pointer:coarse){
+  :where(.occasion-card,.national-occasion-card,.national-card,.premium-feature-card,.popular-wish-card,.quote-card,.tool-card,.founder-card,.guide-article,.feature-card,.contact-card):hover{transform:none;box-shadow:0 12px 38px rgba(0,0,0,.10)}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}

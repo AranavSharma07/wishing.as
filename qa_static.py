@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '59'
+VERSION = '61'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -152,6 +152,14 @@ for page in sorted(ROOT.glob('*.html')):
     if 'AA Group. All rights reserved.' not in html: errors.append(f'{page.name}: missing AA Group copyright')
     if 'WishingASR is a product of' not in html: errors.append(f'{page.name}: missing AA Group product attribution')
 
+# AS public profile portrait and AA Group ownership.
+if not (ROOT/'assets/as-owner-profile.webp').exists():
+    errors.append('AA Group: missing optimized AS owner portrait asset')
+for profile_page in ('index.html','about.html','aa-group.html'):
+    profile_html=(ROOT/profile_page).read_text(encoding='utf-8')
+    if 'assets/as-owner-profile.webp' not in profile_html:
+        errors.append(f'{profile_page}: AS owner portrait is not displayed')
+
 # Occasion-specific character props and particle direction regressions.
 for marker in [
     'function applyCharacterCostumes(',
@@ -227,7 +235,7 @@ for slug in ('diwali-wishes', 'birthday-wishes', 'christmas-wishes', 'holi-wishe
         content=page.read_text(encoding='utf-8')
         for token in ('rel="canonical"','name="description"','property="og:title"','copy-wish','wish-share-inline','href="/create?occasion='):
             if token not in content: errors.append(f'{page.name}: missing guide feature {token}')
-if 'growth.js?v=59' not in (ROOT/'index.html').read_text(encoding='utf-8'):
+if 'growth.js?v=61' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing growth helper script')
 if '"@type":"Organization"' not in (ROOT/'index.html').read_text(encoding='utf-8') or 'AA Group' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing AA Group Organization structured data')
