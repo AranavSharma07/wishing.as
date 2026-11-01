@@ -35,6 +35,38 @@
     {
       "source": "/terms",
       "destination": "/terms.html"
+    },
+    {
+      "source": "/diwali-wishes",
+      "destination": "/diwali-wishes.html"
+    },
+    {
+      "source": "/birthday-wishes",
+      "destination": "/birthday-wishes.html"
+    },
+    {
+      "source": "/christmas-wishes",
+      "destination": "/christmas-wishes.html"
+    },
+    {
+      "source": "/holi-wishes",
+      "destination": "/holi-wishes.html"
+    },
+    {
+      "source": "/eid-wishes",
+      "destination": "/eid-wishes.html"
+    },
+    {
+      "source": "/wedding-wishes",
+      "destination": "/wedding-wishes.html"
+    },
+    {
+      "source": "/anniversary-wishes",
+      "destination": "/anniversary-wishes.html"
+    },
+    {
+      "source": "/raksha-bandhan-wishes",
+      "destination": "/raksha-bandhan-wishes.html"
     }
   ],
   "headers": [
@@ -100,6 +132,24 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/rigged-characters.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/growth.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
