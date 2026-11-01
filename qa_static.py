@@ -10,13 +10,13 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '55'
+VERSION = '59'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
     '/tools': '/tools.html', '/about': '/about.html',
     '/contact': '/contact.html', '/privacy': '/privacy.html',
-    '/terms': '/terms.html',
+    '/terms': '/terms.html', '/aa-group': '/aa-group.html',
 '/diwali-wishes': '/diwali-wishes.html',
 '/birthday-wishes': '/birthday-wishes.html',
 '/christmas-wishes': '/christmas-wishes.html',
@@ -90,7 +90,7 @@ for path in sorted(ROOT.glob('*.html')):
         errors.append(f'{path.name}: expected exactly one twitter:card declaration')
 
 # JavaScript syntax and deterministic tools runtime regression suite.
-for script in ('app.js','tools.js','growth.js','rigged-characters.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs'):
+for script in ('app.js','tools.js','growth.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs'):
     if script.endswith(('.js','.cjs')):
         result = subprocess.run(['node','--check',str(ROOT/script)],capture_output=True,text=True)
         if result.returncode: errors.append(f'{script}: syntax error: {result.stderr.strip()}')
@@ -112,7 +112,7 @@ try:
         ('Strict-Transport-Security','max-age=31536000'),
     ]:
         if required not in header_items: errors.append(f'vercel.json: missing security header {required[0]}')
-    for script in ('/styles.css','/app.js','/tools.js','/growth.js','/rigged-characters.js'):
+    for script in ('/styles.css','/app.js','/tools.js','/growth.js'):
         if not any(entry.get('source') == script for entry in config.get('headers',[])):
             errors.append(f'vercel.json: missing immutable cache rule for {script}')
 except Exception as exc:
@@ -124,7 +124,7 @@ except Exception as exc:
     errors.append(f'sitemap.xml: {exc}')
 versions = []
 for path in html_files:
-    versions += re.findall(r'(?:styles\.css|app\.js|tools\.js|rigged-characters\.js)\?v=(\d+)', path.read_text(encoding='utf-8'))
+    versions += re.findall(r'(?:styles\.css|app\.js|tools\.js|growth\.js)\?v=(\d+)', path.read_text(encoding='utf-8'))
 if versions and set(versions) != {VERSION}:
     errors.append(f'asset cache versions differ: {sorted(set(versions))}')
 if not (ROOT/'assets/social-preview.jpg').exists(): errors.append('missing assets/social-preview.jpg')
@@ -138,15 +138,15 @@ for required_function in ('function renderOccasions(', 'function fillSelect('):
     if required_function not in app:
         errors.append(f'app.js: critical startup function missing: {required_function}')
 
-# v54: rigged character accessibility, fallback and AA Group brand integrity.
+# v58 production character fallback and AA Group brand integrity.
 index = (ROOT/'index.html').read_text(encoding='utf-8')
-rigged = (ROOT/'rigged-characters.js').read_text(encoding='utf-8')
-for marker in ('type="module" src="rigged-characters.js?v=55"','id="heroIllustration"'):
-    if marker not in index: errors.append(f'index.html: missing rigged character integration {marker}')
-for marker in ('new THREE.WebGLRenderer','MutationObserver','waveUntil','IntersectionObserver','webglcontextlost','prefers-reduced-motion'):
-    if marker not in rigged: errors.append(f'rigged-characters.js: missing resilience/animation feature {marker}')
-if '.hero-character-stage.rigged-3d-active .hero-character{opacity:0;pointer-events:auto' not in (ROOT/'styles.css').read_text(encoding='utf-8'):
-    errors.append('styles.css: invisible character buttons must remain interactive and keyboard accessible')
+styles = (ROOT/'styles.css').read_text(encoding='utf-8')
+if 'id="heroIllustration"' not in index: errors.append('index.html: original character stage is missing')
+if 'assets/hero-boy-full.webp' not in index or 'assets/hero-girl-full.webp' not in index:
+    errors.append('index.html: original character artwork is missing')
+if 'rigged-characters.js' in index: errors.append('index.html: experimental 3D renderer should remain disabled until visually verified')
+if 'rigged-characters.js' in config.get('headers',{}).__str__(): errors.append('vercel.json: stale 3D module cache rule remains')
+if '#heroIllustration .hero-character{' not in styles or 'opacity:1!important' not in styles: errors.append('styles.css: character visibility fallback rule is missing')
 for page in sorted(ROOT.glob('*.html')):
     html=page.read_text(encoding='utf-8')
     if 'AA Group. All rights reserved.' not in html: errors.append(f'{page.name}: missing AA Group copyright')
@@ -227,7 +227,7 @@ for slug in ('diwali-wishes', 'birthday-wishes', 'christmas-wishes', 'holi-wishe
         content=page.read_text(encoding='utf-8')
         for token in ('rel="canonical"','name="description"','property="og:title"','copy-wish','wish-share-inline','href="/create?occasion='):
             if token not in content: errors.append(f'{page.name}: missing guide feature {token}')
-if 'growth.js?v=55' not in (ROOT/'index.html').read_text(encoding='utf-8'):
+if 'growth.js?v=59' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing growth helper script')
 if '"@type":"Organization"' not in (ROOT/'index.html').read_text(encoding='utf-8') or 'AA Group' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing AA Group Organization structured data')

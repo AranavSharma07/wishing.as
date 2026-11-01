@@ -25,6 +25,10 @@
       "destination": "/about.html"
     },
     {
+      "source": "/aa-group",
+      "destination": "/aa-group.html"
+    },
+    {
       "source": "/contact",
       "destination": "/contact.html"
     },
@@ -132,15 +136,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=604800, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/rigged-characters.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
         }
       ]
     },

@@ -1,24 +1,19 @@
-# WishingASR v55 — Organic Discovery & AA Group Premium Release
+# WishingASR v59 — AA Group Cinematic Polish & Performance
 
-## New growth features
-- Added eight useful, original occasion landing guides: Diwali, birthday, Christmas, Holi, Eid, wedding, anniversary and Raksha Bandhan wishes.
-- Each guide contains original examples, language-specific copy-ready messages, one-tap copy and WhatsApp sharing, practical writing tips, FAQs, related internal links and a direct CTA that opens the matching occasion in the creator.
-- Added a Popular Wish Guides hub on the homepage for discovery and internal linking.
-- Added low-friction sharing links for WhatsApp, Telegram, Facebook and X, plus copy-link and copy-message controls.
-- Added parent-company Organization, WebSite and WebApplication structured data for AA Group and WishingASR.
-- Updated sitemap, robots file, Vercel rewrites, local preview routes and cache keys.
+## Visual refinements
+- Added a restrained cinematic polish layer with consistent gold/rose accent tokens, smoother easing, refined typography rendering, balanced text wrapping, and subtle card/button interactions.
+- Added consistent keyboard focus-visible styling and touch-target refinements.
+- Preserved existing page-specific occasion palettes, 20 greeting-card styles, nine creative tool themes, AA Group company page, owner initials-only profile, and original character artwork.
 
-## SEO approach
-- Target intent phrases naturally in page titles, descriptions, headings, examples and internal links.
-- Removed the obsolete meta-keywords tag. Google Search does not use it as a ranking signal.
-- Avoided keyword stuffing, fake popularity claims, doorway pages and automatically generated thin pages.
-- Search visibility and social sharing are not guaranteed; monitor performance with Search Console after deployment.
+## Performance refinements
+- Removed no existing features or external integrations.
+- Added native lazy loading and async decoding to below-the-fold images where not already configured; hero images retain high fetch priority.
+- Added content-visibility rendering for long lower-page sections on larger screens.
+- Standardized local asset cache query versions to v59.
+- Kept animations restrained and disabled transitions/animations for reduced-motion users.
+- No custom cursor effect was introduced.
 
-## Retained
-- Existing 32+ occasion / national-day experiences, greeting-card creator, 20 designs, photo upload, PNG export, calendar, creative tools, 3D character scene, seasonal animations and AA Group copyright attribution.
-
-## External dependencies and limits
-- Google Fonts, Google AdSense and the Three.js module remain third-party network dependencies.
-- No analytics property was added because an owner-provided GA4 measurement ID was not available.
-- No social profile URLs were invented.
-- Full live-device testing and Search Console indexing checks must be completed after deployment.
+## Validation
+- Existing QA scripts included for static, calendar, canvas, tools, and growth checks.
+- Final archive integrity verified.
+- Physical-device and deployed Vercel visual checks remain necessary; no claim of guaranteed viral reach or perfect performance on every device.

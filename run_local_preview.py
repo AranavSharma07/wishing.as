@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
 
 class Handler(SimpleHTTPRequestHandler):
-    ROUTES = {'/create': '/index.html', '/quotes': '/quotes.html', '/national-days': '/national-days.html', '/blog': '/blog.html', '/tools': '/tools.html', '/about': '/about.html', '/contact': '/contact.html', '/privacy': '/privacy.html', '/terms': '/terms.html', '/diwali-wishes': '/diwali-wishes.html', '/birthday-wishes': '/birthday-wishes.html', '/christmas-wishes': '/christmas-wishes.html', '/holi-wishes': '/holi-wishes.html', '/eid-wishes': '/eid-wishes.html', '/wedding-wishes': '/wedding-wishes.html', '/anniversary-wishes': '/anniversary-wishes.html', '/raksha-bandhan-wishes': '/raksha-bandhan-wishes.html'}
+    ROUTES = {'/create': '/index.html', '/quotes': '/quotes.html', '/national-days': '/national-days.html', '/blog': '/blog.html', '/tools': '/tools.html', '/about': '/about.html', '/contact': '/contact.html', '/privacy': '/privacy.html', '/terms': '/terms.html', '/aa-group': '/aa-group.html', '/diwali-wishes': '/diwali-wishes.html', '/birthday-wishes': '/birthday-wishes.html', '/christmas-wishes': '/christmas-wishes.html', '/holi-wishes': '/holi-wishes.html', '/eid-wishes': '/eid-wishes.html', '/wedding-wishes': '/wedding-wishes.html', '/anniversary-wishes': '/anniversary-wishes.html', '/raksha-bandhan-wishes': '/raksha-bandhan-wishes.html'}
 
     def _rewrite_friendly_route(self):
         from urllib.parse import urlsplit
@@ -38,7 +38,7 @@ for port in list(range(8787, 8800)) + [0]:
         continue
 if server is None:
     raise SystemExit('Could not open a local preview port. Close other local servers and retry.')
-print(f'WishingASR Responsive Preview v55: http://127.0.0.1:{server.server_port}/')
+print(f'WishingASR Responsive Preview v58: http://127.0.0.1:{server.server_port}/')
 print('Keep this window open. Press Ctrl+C to stop.')
 try:
     server.serve_forever()
