@@ -71,6 +71,50 @@
     {
       "source": "/raksha-bandhan-wishes",
       "destination": "/raksha-bandhan-wishes.html"
+    },
+    {
+      "source": "/chhath-puja-wishes",
+      "destination": "/chhath-puja-wishes.html"
+    },
+    {
+      "source": "/new-year-wishes",
+      "destination": "/new-year-wishes.html"
+    },
+    {
+      "source": "/whatsapp-status-captions",
+      "destination": "/whatsapp-status-captions.html"
+    },
+    {
+      "source": "/good-morning-wishes",
+      "destination": "/good-morning-wishes.html"
+    },
+    {
+      "source": "/good-night-wishes",
+      "destination": "/good-night-wishes.html"
+    },
+    {
+      "source": "/love-messages",
+      "destination": "/love-messages.html"
+    },
+    {
+      "source": "/birthday-wishes-hindi",
+      "destination": "/birthday-wishes-hindi.html"
+    },
+    {
+      "source": "/birthday-wishes-english",
+      "destination": "/birthday-wishes-english.html"
+    },
+    {
+      "source": "/hindi-wishes",
+      "destination": "/hindi-wishes.html"
+    },
+    {
+      "source": "/english-wishes",
+      "destination": "/english-wishes.html"
+    },
+    {
+      "source": "/hinglish-wishes",
+      "destination": "/hinglish-wishes.html"
     }
   ],
   "headers": [
@@ -91,7 +135,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
+          "value": "camera=(), microphone=(), geolocation=(), clipboard-read=(), clipboard-write=(self), payment=()"
         },
         {
           "key": "Strict-Transport-Security",
@@ -100,6 +144,22 @@
         {
           "key": "X-Permitted-Cross-Domain-Policies",
           "value": "none"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Origin-Agent-Cluster",
+          "value": "?1"
+        },
+        {
+          "key": "X-Download-Options",
+          "value": "noopen"
         }
       ]
     },
@@ -141,6 +201,24 @@
     },
     {
       "source": "/growth.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/tools-extras.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/site-ui.js",
       "headers": [
         {
           "key": "Cache-Control",

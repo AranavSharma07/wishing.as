@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '65'
+VERSION = '65.8'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -24,7 +24,7 @@ ROUTES = {
 '/eid-wishes': '/eid-wishes.html',
 '/wedding-wishes': '/wedding-wishes.html',
 '/anniversary-wishes': '/anniversary-wishes.html',
-'/raksha-bandhan-wishes': '/raksha-bandhan-wishes.html'
+'/raksha-bandhan-wishes': '/raksha-bandhan-wishes.html', '/good-morning-wishes': '/good-morning-wishes.html', '/good-night-wishes': '/good-night-wishes.html', '/love-messages': '/love-messages.html', '/chhath-puja-wishes': '/chhath-puja-wishes.html', '/new-year-wishes': '/new-year-wishes.html', '/whatsapp-status-captions': '/whatsapp-status-captions.html', '/birthday-wishes-hindi': '/birthday-wishes-hindi.html', '/birthday-wishes-english': '/birthday-wishes-english.html', '/hindi-wishes': '/hindi-wishes.html', '/english-wishes': '/english-wishes.html', '/hinglish-wishes': '/hinglish-wishes.html'
 }
 
 class HTMLAudit(HTMLParser):
@@ -90,11 +90,11 @@ for path in sorted(ROOT.glob('*.html')):
         errors.append(f'{path.name}: expected exactly one twitter:card declaration')
 
 # JavaScript syntax and deterministic tools runtime regression suite.
-for script in ('app.js','tools.js','growth.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs'):
+for script in ('app.js','tools.js','tools-extras.js','growth.js','qa_tools_extras_runtime.cjs','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs','qa_tools_exports_runtime.cjs'):
     if script.endswith(('.js','.cjs')):
         result = subprocess.run(['node','--check',str(ROOT/script)],capture_output=True,text=True)
         if result.returncode: errors.append(f'{script}: syntax error: {result.stderr.strip()}')
-for script in ('qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs'):
+for script in ('qa_tools_extras_runtime.cjs','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs','qa_tools_exports_runtime.cjs'):
     result = subprocess.run(['node',str(ROOT/script)],capture_output=True,text=True)
     if result.returncode: errors.append(f'{script}: failed: {result.stderr.strip()}')
 
@@ -112,7 +112,7 @@ try:
         ('Strict-Transport-Security','max-age=31536000'),
     ]:
         if required not in header_items: errors.append(f'vercel.json: missing security header {required[0]}')
-    for script in ('/styles.css','/app.js','/tools.js','/growth.js'):
+    for script in ('/styles.css','/app.js','/tools.js','/growth.js','/tools-extras.js'):
         if not any(entry.get('source') == script for entry in config.get('headers',[])):
             errors.append(f'vercel.json: missing immutable cache rule for {script}')
 except Exception as exc:
@@ -124,7 +124,7 @@ except Exception as exc:
     errors.append(f'sitemap.xml: {exc}')
 versions = []
 for path in html_files:
-    versions += re.findall(r'(?:styles\.css|app\.js|tools\.js|growth\.js)\?v=(\d+)', path.read_text(encoding='utf-8'))
+    versions += re.findall(r'(?:styles\.css|app\.js|tools\.js|tools-extras\.js|growth\.js)\?v=(\d+(?:\.\d+)?)', path.read_text(encoding='utf-8'))
 if versions and set(versions) != {VERSION}:
     errors.append(f'asset cache versions differ: {sorted(set(versions))}')
 if not (ROOT/'assets/social-preview.jpg').exists(): errors.append('missing assets/social-preview.jpg')
@@ -185,6 +185,8 @@ for marker in [
     '.drone-show-stage',
     '.occasion-drone-svg',
     '@keyframes drone-hover',
+    '@keyframes drone-formation-enter',
+    '@keyframes drone-twinkle',
     '@media(prefers-reduced-motion:reduce)',
 ]:
     if marker not in styles: errors.append(f'drone show: missing CSS marker {marker}')
@@ -219,6 +221,13 @@ for marker in [
 tools = (ROOT/'tools.js').read_text(encoding='utf-8')
 for marker in ["invitationReady", "captionReady", "Array.isArray(value)", "document.execCommand('copy')===true"]:
     if marker not in tools: errors.append(f'tools.js: missing regression protection {marker}')
+for marker in ["toolSearch", "data-copy-favorite", "$('wishOutput').lang=lang==="]:
+    if marker not in tools: errors.append(f'tools.js: missing searchable/language-aware tools improvement {marker}')
+main_export = (ROOT/'app.js').read_text(encoding='utf-8')
+for marker in ["Promise.race([Promise.all(fontRequests)", "canvas.toDataURL('image/png')", "typeof canvas.toBlob!=='function'"]:
+    if marker not in main_export: errors.append(f'app.js: missing robust card export fallback {marker}')
+if 'id="toolSearch"' not in (ROOT/'tools.html').read_text(encoding='utf-8'):
+    errors.append('tools.html: missing searchable tools control')
 
 # v50: theme colour cascade and mobile-readability regression checks.
 styles_v50 = (ROOT/'styles.css').read_text(encoding='utf-8')
@@ -253,8 +262,65 @@ for marker in ('data-copy-text','navigator.clipboard.writeText','navigator.share
     if marker not in (ROOT/'growth.js').read_text(encoding='utf-8') and marker != 'navigator.share':
         errors.append(f'growth.js: missing copy/share capability {marker}')
 
+
+# SEO V2 acceptance: canonical uniqueness, exact sitemap coverage, JSON-LD validity and robots.
+canonical_map = {}
+for page in html_files:
+    content = (ROOT/page.name).read_text(encoding='utf-8')
+    found = [href for tag in re.findall(r'<link\b[^>]*>', content, re.I) if re.search(r'\brel=["\']canonical["\']', tag, re.I) for href in re.findall(r'\bhref=["\']([^"\']+)', tag, re.I)]
+    if len(found) != 1:
+        errors.append(f'{page.name}: expected exactly one canonical URL')
+        continue
+    canonical_map[page.name] = found[0].rstrip('/') if found[0].endswith('/') and found[0] != 'https://wishingasr.vercel.app/' else found[0]
+if len(set(canonical_map.values())) != len(canonical_map):
+    errors.append('SEO: duplicate canonical URLs detected across indexable pages')
+try:
+    sitemap_root = ET.parse(ROOT/'sitemap.xml').getroot()
+    locs = [node.text.strip() for node in sitemap_root.iter() if node.tag.endswith('loc') and node.text]
+    normalized_locs = {loc.rstrip('/') if loc.endswith('/') and loc != 'https://wishingasr.vercel.app/' else loc for loc in locs}
+    expected_locs = set(canonical_map.values())
+    if normalized_locs != expected_locs:
+        errors.append(f'sitemap.xml: canonical coverage mismatch (missing={sorted(expected_locs-normalized_locs)}, extra={sorted(normalized_locs-expected_locs)})')
+except Exception as exc:
+    errors.append(f'sitemap coverage: {exc}')
+for page in html_files:
+    content=(ROOT/page.name).read_text(encoding='utf-8')
+    for match in re.findall(r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', content, re.I|re.S):
+        try:
+            data=json.loads(match)
+            if not isinstance(data, (dict,list)):
+                raise ValueError('structured data must be an object or array')
+        except Exception as exc:
+            errors.append(f'{page.name}: invalid JSON-LD: {exc}')
+robots=(ROOT/'robots.txt').read_text(encoding='utf-8')
+if 'Sitemap: https://wishingasr.vercel.app/sitemap.xml' not in robots:
+    errors.append('robots.txt: sitemap declaration missing')
+if 'User-agent: *' not in robots or 'Allow: /' not in robots:
+    errors.append('robots.txt: public crawling policy not explicit')
+# Validate every SEO guide has a meaningful content body and not just a keyword stub.
+for slug in ('good-morning-wishes','good-night-wishes','love-messages','chhath-puja-wishes','new-year-wishes','whatsapp-status-captions','birthday-wishes-hindi','birthday-wishes-english','hindi-wishes','english-wishes','hinglish-wishes'):
+    page=ROOT/f'{slug}.html'
+    if not page.exists():
+        errors.append(f'SEO V2: missing landing page {slug}.html')
+    else:
+        body=page.read_text(encoding='utf-8')
+        if len(re.sub(r'<[^>]+>',' ',body)) < 1200:
+            errors.append(f'{slug}.html: content appears too short for a useful guide')
+        for token in ('rel="canonical"','property="og:title"','name="twitter:card"','application/ld+json','copy-wish','wish-share-inline'):
+            if token not in body: errors.append(f'{slug}.html: missing {token}')
+# The public release label is deliberately fixed at v65; cache tokens are separate.
+if (ROOT/'VERSION.txt').read_text(encoding='utf-8').strip() != 'WishingASR v65 - Occasion Drone Light Show (Final Polish)':
+    errors.append('VERSION.txt: public release name changed unexpectedly')
+# Creator export formats and photo processing safety guardrails.
+app_source=(ROOT/'app.js').read_text(encoding='utf-8')
+for marker in ("'portrait','story','square','landscape','link'", 'naturalWidth*naturalHeight>80000000', 'img.onerror=()=>', 'link-preview-1200x630'):
+    if marker not in app_source: errors.append(f'app.js: missing creator feature/safety marker {marker}')
+for marker in ('photo-export-options','checkbox-inline'):
+    if marker not in (ROOT/'styles.css').read_text(encoding='utf-8'):
+        errors.append(f'styles.css: missing responsive card option style {marker}')
+
 if errors:
     print('FAIL')
     print('\n'.join(f'- {item}' for item in errors))
     sys.exit(1)
-print('PASS: HTML semantics/accessibility, labels and links, SEO/social metadata, JS syntax, canvas QA, tools runtime regressions, calendar date-selection and multi-year date-data runtime, sitemap, Vercel routes/security/cache rules.')
+print('PASS: HTML semantics/accessibility, local links, unique SEO metadata/canonicals, sitemap coverage, JSON-LD syntax, JS syntax, card/tool exports, saved-wish backup/restore, local date planner, drone profiles, calendar regressions, Vercel routes/security/cache rules.')

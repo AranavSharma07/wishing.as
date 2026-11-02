@@ -81,6 +81,16 @@ assert.match(elements.inviteStatus.textContent, /Create an invitation first/i);
 elements.copyCaption.click();
 assert.match(elements.captionStatus.textContent, /Create a caption first/i);
 
+// Exercise every supported occasion, language and tone combination.
+let wishCombos=0;
+const occasions = ['Birthday','Diwali','Holi','Eid','Christmas','New Year','Anniversary','Wedding','Raksha Bandhan','Thank You','Good Luck'];
+for (const occasion of occasions) for (const lang of ['en','hi','hinglish']) for (const tone of ['heartfelt','short','poetic','formal','funny']) {
+  elements.wishOccasion.value=occasion; elements.wishLang.value=lang; elements.wishTone.value=tone; elements.generateWish.click();
+  assert.ok(elements.wishOutput.textContent.length>12, `${occasion}/${lang}/${tone} must produce a wish`); wishCombos++;
+  if (lang==='hi') assert.doesNotMatch(elements.wishOutput.textContent,/Please accept my warmest|May this moment|Keep smiling/i, 'Hindi output should not append English tone text');
+  if (lang==='hinglish') assert.doesNotMatch(elements.wishOutput.textContent,/Please accept my warmest|May this moment|Keep smiling/i, 'Hinglish output should not append English tone text');
+}
+elements.wishOccasion.value='Birthday'; elements.wishLang.value='en'; elements.wishTone.value='heartfelt';
 // Wish generation, copy and persistence.
 elements.generateWish.click();
 assert.ok(elements.wishOutput.textContent.length > 20, 'wish generator should create meaningful content');
@@ -91,16 +101,26 @@ let saved = JSON.parse(localStorage.getItem('wishingasr-favorites'));
 assert.equal(saved.length, 1);
 assert.match(saved[0].text, /QA Recipient/);
 
-// Invitation and caption must be created before copy becomes available.
-elements.inviteEvent.value = 'Product launch';
+// Invitation details and every caption category/tone combination.
+elements.inviteEvent.value = 'Product launch'; elements.inviteDate.value='2026-12-25'; elements.inviteTime.value='19:30'; elements.invitePlace.value='Main Hall'; elements.inviteHost.value='AA Group';
 elements.makeInvite.click();
 assert.match(elements.inviteOutput.textContent, /Product launch/);
+assert.match(elements.inviteOutput.textContent, /19:30/);
+assert.match(elements.inviteOutput.textContent, /Main Hall/);
+assert.match(elements.inviteOutput.textContent, /AA Group/);
 elements.copyInvite.click();
 assert.equal(elements.inviteStatus.textContent, 'Copied to clipboard.');
-elements.makeCaption.click();
-assert.ok(elements.captionOutput.textContent.length > 5);
+let captionCombos=0;
+for(const occasion of ['Birthday','Festival','Love','Friendship','Motivation','Thank You','Good Morning']) for(const tone of ['warm','short','poetic','playful']){
+  elements.captionOccasion.value=occasion; elements.captionTone.value=tone; elements.makeCaption.click();
+  assert.ok(elements.captionOutput.textContent.length>5, `${occasion}/${tone} caption should be generated`); captionCombos++;
+}
 elements.copyCaption.click();
 assert.equal(elements.captionStatus.textContent, 'Copied to clipboard.');
+// Saved-wish deletion is delegated through the rendered remove control.
+elements.favoriteList.dispatch('click',{target:{closest:()=>({dataset:{remove:'0'}})}});
+assert.match(elements.favoriteStatus.textContent,/removed/i);
+assert.equal(JSON.parse(localStorage.getItem('wishingasr-favorites')).length,0);
 
 // A failed legacy copy command must not report a false success.
 copyAllowed = false;
@@ -113,4 +133,4 @@ localStorage.setItem('wishingasr-favorites', '{"not":"an array"}');
 elements.saveWish.click();
 assert.match(elements.favoriteList.innerHTML, /favorite-item|No saved wishes/);
 
-console.log('PASS: wish generation/copy/save, placeholder guards, invitation/caption copy, failed-copy feedback, corrupt storage recovery.');
+console.log(`PASS: ${wishCombos} wish combinations, ${captionCombos} caption combinations, wish/save/remove, invitation details/copy, failed-copy feedback, corrupt storage recovery.`);
