@@ -103,103 +103,95 @@ function setTheme(id,{manual=true,scroll=false,updateTitle=true}={}){
  if(scroll){$('create').scrollIntoView({behavior:'smooth',block:'start'});}
 }
 // Each occasion maps to a specific celebration-motion profile; particles and the 3D characters switch together.
-const characterCelebrationProfiles = {
-  diwali: 'sparkle',
-  holi: 'colour-burst',
-  eid: 'moonlit',
-  christmas: 'snowfall',
-  newyear: 'fireworks',
-  rakhi: 'ribbon-dance',
-  navratri: 'garba',
-  dussehra: 'triumph',
-  birthday: 'balloons',
-  wedding: 'petals',
-  anniversary: 'hearts',
-  valentine: 'hearts',
-  rose: 'petals',
-  propose: 'hearts',
-  chocolate: 'confetti',
-  teddy: 'bounce',
-  promise: 'warm-glow',
-  hug: 'embrace',
-  kiss: 'hearts',
-  pongal: 'sunrise',
-  ganesh: 'blessing',
-  janmashtami: 'flute-dance',
-  chhath: 'sunrise',
-  baisakhi: 'harvest-dance',
-  buddha: 'serenity',
-  republicday: 'tricolour',
-  independenceday: 'tricolour-burst',
-  gandhijayanti: 'peace',
-  constitutionday: 'wisdom',
-  nationalunityday: 'unity',
-  nationalyouthday: 'rocket',
-  votersday: 'civic',
-  scienceday: 'discovery',
-  technologyday: 'innovation',
-  kargilvijaydiwas: 'honour',
-  sportsday: 'victory',
-  teachersday: 'learning',
-  hindidiwas: 'letters',
-  airforceday: 'soar',
-  educationday: 'learning',
-  childrensday: 'balloons',
-  armyday: 'honour',
-  navyday: 'ocean',
-  ambedkarjayanti: 'equality',
-  girlchildday: 'rise',
-  };
-
-function applyCharacterCostumes(id){
+function renderOccasionDroneShow(id){
+ const svg=$('occasionDroneShow');
+ if(!svg)return;
  const stage=$('heroIllustration');
- if(!stage)return;
- const costumes={
-  diwali:{hands:['🪔','🪔'],speech:'Let’s light the night with happiness!'},
-  christmas:{hands:['🎁','🔔'],hat:'santa',speech:'A little Christmas magic is falling!'},
-  holi:{hands:['🎨','🌈'],speech:'Let’s celebrate in every colour!'},
-  eid:{hands:['🏮','🌙'],speech:'Sharing light, kindness and blessings.'},
-  newyear:{hands:['🎉','🎆'],hat:'party',speech:'Here’s to fresh beginnings!'},
-  rakhi:{hands:['🧵','💝'],speech:'Celebrating a bond that lasts forever.'},
-  navratri:{hands:['🥁','🪇'],speech:'Let’s dance into the festive spirit!'},
-  dussehra:{hands:['🏹','✨'],speech:'Celebrating the victory of good over evil.'},
-  birthday:{hands:['🎂','🎈'],hat:'party',speech:'Make a wish and celebrate!'},
-  wedding:{hands:['💐','🌸'],speech:'A little bloom for a beautiful beginning.'},
-  anniversary:{hands:['💝','🌹'],speech:'Celebrating a love that keeps growing.'},
-  valentine:{hands:['🌹','💗'],speech:'A little love, wrapped in a wish.'},
-  rose:{hands:['🌹','🌷'],speech:'Sending flowers and warm thoughts.'},
-  propose:{hands:['💍','❤️'],speech:'A moment made for a heartfelt yes.'},
-  pongal:{hands:['🌾','🪁'],speech:'Celebrating sunshine and a fruitful harvest.'},
-  ganesh:{hands:['🌺','🙏'],speech:'May every new beginning be blessed.'},
-  janmashtami:{hands:['🪈','🪷'],speech:'A melody of joy and devotion.'},
-  chhath:{hands:['🪷','☀️'],speech:'Warm wishes for light and gratitude.'},
-  baisakhi:{hands:['🌾','🥁'],speech:'Let’s celebrate abundance and joy!'},
-  buddha:{hands:['🪷','☸️'],speech:'Wishing you peace and mindful moments.'},
-  republicday:{hands:['🇮🇳','🕊️'],speech:'Celebrating the spirit of our Constitution.'},
-  independenceday:{hands:['🇮🇳','🎉'],speech:'Celebrating freedom and unity.'},
-  gandhijayanti:{hands:['🕊️','🌿'],speech:'A celebration of peace and truth.'},
-  childrensday:{hands:['🎈','🧸'],speech:'A little joy for every little heart.'}
+ const palette={
+  diwali:['#ffd166','#ff9f43','#fff1b8'],christmas:['#75d69a','#e9f6ff','#e74c62','#ffd166'],
+  holi:['#ff5ca8','#ffd166','#55d6ff','#9b7bff'],eid:['#d8c0ff','#ffe6a8','#7de2d1'],
+  newyear:['#ffe08a','#f58ac8','#8bd8ff'],birthday:['#ff8ab5','#ffd166','#8bd8ff'],
+  wedding:['#fff0d8','#f2a9c7','#d9c7ff'],anniversary:['#ff8ca8','#ffd7a0','#fff0d8'],
+  valentine:['#ff6f9f','#ffd0df','#fff0f5'],rose:['#f58aa5','#ffd1dc','#fff0f5'],
+  propose:['#ffd166','#ff7ea8','#fff0d8'],rakhi:['#f6bd60','#e98a4a','#f4d6a0'],
+  chocolate:['#c58a55','#f1c99a','#fff0d2'],teddy:['#c9966b','#f6d4aa','#f6a6bc'],
+  promise:['#9db8ff','#e5d2ff','#f8e7ff'],hug:['#ff8fab','#ffd2df','#fff0f5'],
+  kiss:['#f45b86','#ffc2d1','#fff0f5'],pongal:['#ffd166','#ff9e55','#9bdc9b'],
+  ganesh:['#ffb85c','#ffdca8','#f18b6a'],janmashtami:['#7bc6e8','#f7d879','#b29aff'],
+  chhath:['#ffb45b','#ffe5a0','#8bd8ff'],baisakhi:['#f4c95d','#9dcf82','#f6a65b'],
+  buddha:['#f0c77a','#b2dfc8','#d6c3ff'],navratri:['#f3a0c8','#ffd166','#9d8cff'],
+  dussehra:['#f5b25d','#e66f57','#ffe2a8'],republicday:['#ff9933','#ffffff','#138808'],
+  independenceday:['#ff9933','#ffffff','#138808'],gandhijayanti:['#f4e6c8','#b5d6c4','#f7f2e6'],constitutionday:['#8fb3e7','#f2d38b','#f8f3e8'],nationalunityday:['#8fcab7','#f1d28b','#b9b6ff'],nationalyouthday:['#8bd8ff','#ffd166','#a48bff'],votersday:['#8db8ff','#ffffff','#f4c77e'],scienceday:['#76d4e8','#b6a1ff','#f2d38b'],technologyday:['#76d4e8','#9cb6ff','#f2d38b'],kargilvijaydiwas:['#c6d1e2','#e4b86d','#91a8c8'],sportsday:['#8bd8ff','#f4c77e','#f29fbd'],teachersday:['#8fcab7','#f2d38b','#a7bfff'],hindidiwas:['#e4a3ad','#f2d38b','#b7c8e8'],airforceday:['#8bd8ff','#ffffff','#f4c77e'],educationday:['#8fcab7','#ffd166','#8db8ff'],armyday:['#a8b9cd','#e4b86d','#d7e0ed'],navyday:['#5bb3d4','#d8e8f6','#f4c77e'],ambedkarjayanti:['#6da5db','#f2d38b','#e3edf7'],girlchildday:['#e79abd','#b6a1ff','#ffd166'],
+  default:['#f6d58b','#a8c8ff','#f5a8c9']
  };
- const costume=costumes[id]||null;
- stage.dataset.costume=costume?(costume.hat||'hands'):'none';
- stage.querySelectorAll('.hero-character').forEach((person,index)=>{
-  person.querySelectorAll('.seasonal-accessory').forEach(node=>node.remove());
-  if(!costume)return;
-  if(costume.hat){
-   const hat=document.createElement('span');
-   hat.className=`seasonal-accessory accessory-hat accessory-hat-${costume.hat}`;
-   hat.setAttribute('aria-hidden','true');
-   person.appendChild(hat);
+ const pts=[];
+ const add=(x,y,band)=>pts.push({x,y,band});
+ const line=(x1,y1,x2,y2,n=12,band)=>{for(let i=0;i<n;i++){const t=n===1?0:i/(n-1);add(x1+(x2-x1)*t,y1+(y2-y1)*t,band);}};
+ const arc=(cx,cy,rx,ry,a1,a2,n=24,band)=>{for(let i=0;i<n;i++){const t=i/(n-1);const a=a1+(a2-a1)*t;add(cx+Math.cos(a)*rx,cy+Math.sin(a)*ry,band);}};
+ const circle=(cx,cy,r,n=24,band)=>arc(cx,cy,r,r,0,Math.PI*2,n,band);
+ const heart=()=>{for(let i=0;i<56;i++){const t=i/55*Math.PI*2;const x=16*Math.pow(Math.sin(t),3);const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);add(400+x*10.2,218-y*10.2);}};
+ const star=()=>{const v=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5;const r=i%2?67:146;v.push([400+Math.cos(a)*r,220+Math.sin(a)*r]);}for(let i=0;i<v.length;i++){const a=v[i],b=v[(i+1)%v.length];line(a[0],a[1],b[0],b[1],5);}};
+ const tree=()=>{for(let row=0;row<7;row++){const y=92+row*38;const width=35+row*23;line(400-width,y+28,400,y,5);line(400,y,400+width,y+28,5);}line(384,366,416,366,5);line(384,366,384,405,5);line(416,366,416,405,5);line(384,405,416,405,5);circle(400,72,10,8);};
+ const diya=()=>{arc(400,255,132,70,Math.PI,Math.PI*2,28);line(268,255,532,255,20);arc(400,174,25,50,Math.PI,Math.PI*2,12);line(400,120,400,143,7);};
+ const crescent=()=>{arc(400,220,142,142,-Math.PI*.72,Math.PI*.72,32);arc(452,220,112,112,-Math.PI*.70,Math.PI*.70,28);star();};
+ const flower=()=>{for(let p=0;p<6;p++){const a=p*Math.PI/3;const cx=400+Math.cos(a)*66,cy=220+Math.sin(a)*66;circle(cx,cy,44,12);}circle(400,220,32,16);};
+ const fireworks=()=>{[[252,166],[548,166],[400,285]].forEach(([cx,cy],b)=>{for(let r=38;r<=104;r+=33){for(let k=0;k<12;k++){const a=k*Math.PI/6;add(cx+Math.cos(a)*r,cy+Math.sin(a)*r);}}circle(cx,cy,8,8);});};
+ const balloons=()=>{for(let b=0;b<5;b++){const cx=200+b*100,cy=170+(b%2)*30;arc(cx,cy,31,43,0,Math.PI*2,18);line(cx,cy+43,cx+(b-2)*8,355,8);}};
+ const flag=()=>{for(let k=0;k<15;k++){const x=240+k*23;add(x,158,'saffron');add(x,220,'white');add(x,282,'green');}circle(400,220,23,22,'chakra');for(let k=0;k<12;k++){const a=k*Math.PI/6;line(400,220,400+Math.cos(a)*22,220+Math.sin(a)*22,3,'chakra');}};
+ const rakhi=()=>{line(250,220,550,220,28);circle(400,220,58,24);circle(400,220,35,18);for(let k=0;k<8;k++){const a=k*Math.PI/4;circle(400+Math.cos(a)*78,220+Math.sin(a)*78,9,7);}};
+ const harvest=()=>{line(400,360,400,115,22);for(let k=0;k<7;k++){const y=140+k*27;line(400,y,340-k*4,y-30,6);line(400,y+8,460+k*4,y-22,6);}arc(400,370,145,55,Math.PI,Math.PI*2,22);};
+ const flute=()=>{line(245,220,555,220,34);for(let k=0;k<6;k++)circle(330+k*48,220,5,6);arc(500,140,65,65,-Math.PI*.82,Math.PI*.25,15);line(500,140,540,80,8);};
+ const sunrise=()=>{arc(400,258,105,105,Math.PI,Math.PI*2,28);line(230,258,570,258,24);for(let k=0;k<4;k++)arc(400,285+k*25,145-k*18,12,0,Math.PI,18);};
+ const bow=()=>{arc(300,220,95,95,-Math.PI*.72,Math.PI*.72,24);line(300,120,300,320,22);line(290,220,570,220,26);line(570,220,540,202,5);line(570,220,540,238,5);};
+ const book=()=>{line(250,145,390,180,16);line(390,180,390,340,16);line(410,180,550,145,16);line(410,180,410,340,16);line(250,145,250,315,16);line(250,315,390,350,16);line(410,350,550,315,16);line(550,145,550,315,16);};
+ const unity=()=>{for(let i=0;i<56;i++){const a=i/55*Math.PI*2;add(400+142*Math.cos(a),220+88*Math.sin(a)*Math.cos(a));}};
+ const rocket=()=>{arc(400,220,42,105,-Math.PI,Math.PI,28);line(400,90,400,114,7);line(358,270,330,330,8);line(442,270,470,330,8);line(400,325,400,390,10);for(let i=0;i<3;i++){const a=Math.PI+i*Math.PI/2;add(400+Math.cos(a)*16,390+Math.sin(a)*28);}};
+ const anchor=()=>{circle(400,120,30,18);line(400,148,400,340,22);arc(400,330,125,80,0,Math.PI,24);line(275,330,315,286,7);line(525,330,485,286,7);line(400,340,400,390,9);};
+ const atom=()=>{for(let e=0;e<3;e++){const rot=e*Math.PI/3;for(let i=0;i<28;i++){const a=i/27*Math.PI*2;const x=138*Math.cos(a),y=78*Math.sin(a);add(400+x*Math.cos(rot)-y*Math.sin(rot),220+x*Math.sin(rot)+y*Math.cos(rot));}}circle(400,220,13,12);};
+ const ballot=()=>{line(315,155,485,155,12);line(315,155,315,330,12);line(485,155,485,330,12);line(315,330,485,330,12);line(365,240,395,270,8);line(395,270,455,195,10);};
+ const trophy=()=>{arc(400,160,95,62,0,Math.PI,18);line(305,160,495,160,12);line(330,160,350,260,10);line(470,160,450,260,10);line(350,260,450,260,10);line(400,260,400,350,12);line(350,350,450,350,12);line(330,375,470,375,10);};
+ const tricolourFlag=()=>flag();
+ const shapes={
+  diwali:diya,christmas:tree,holi:flower,eid:crescent,newyear:fireworks,birthday:balloons,
+  wedding:flower,anniversary:heart,valentine:heart,rose:flower,propose:heart,rakhi:rakhi,
+  chocolate:heart,teddy:heart,promise:heart,hug:heart,kiss:heart,pongal:harvest,baisakhi:harvest,
+  ganesh:flower,janmashtami:flute,chhath:sunrise,buddha:flower,navratri:star,dussehra:bow,
+  republicday:tricolourFlag,independenceday:tricolourFlag,gandhijayanti:unity,constitutionday:book,nationalunityday:unity,nationalyouthday:rocket,votersday:ballot,scienceday:atom,technologyday:atom,kargilvijaydiwas:star,sportsday:trophy,teachersday:book,hindidiwas:book,airforceday:rocket,educationday:book,armyday:star,navyday:anchor,ambedkarjayanti:book,girlchildday:heart,childrensday:balloons
+ };
+ (shapes[id]||star)();
+ // A modest orbit frames celebrations; tricolour flag formations stay clean and uncluttered.
+ if(id!=='republicday' && id!=='independenceday'){for(let i=0;i<6;i++){const a=i*Math.PI/3;add(400+Math.cos(a)*220,220+Math.sin(a)*165);}}
+ const isMobile=window.matchMedia('(max-width:600px)').matches;
+ const isTablet=window.matchMedia('(max-width:1000px)').matches;
+ const limit=isMobile?24:(isTablet?34:52);
+ const displayPts=pts.length>limit?Array.from({length:limit},(_,i)=>pts[Math.round(i*(pts.length-1)/(limit-1))]):pts;
+ const colors=palette[id]||palette.default;
+ const drones=displayPts.map((p,i)=>{
+  const color=p.band==='saffron'? '#ff9933':p.band==='white'?'#ffffff':p.band==='green'?'#138808':p.band==='chakra'?'#4b78bb':colors[i%colors.length];
+  return `<g class="drone-unit" style="--drone-delay:${(i%17)*-.13}s;--drone-color:${color}"><circle class="drone-halo" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="9"/><circle class="drone-light" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.2"/></g>`;
+ }).join('');
+ const labels={diwali:'Diwali',christmas:'Christmas',holi:'Holi',eid:'Eid',newyear:'New Year',birthday:'Birthday',wedding:'Wedding',anniversary:'Anniversary',valentine:'Valentine’s Day',rose:'Rose Day',propose:'Propose Day',rakhi:'Raksha Bandhan',chocolate:'Chocolate Day',teddy:'Teddy Day',promise:'Promise Day',hug:'Hug Day',kiss:'Kiss Day',pongal:'Pongal / Makar Sankranti',ganesh:'Ganesh Chaturthi',janmashtami:'Janmashtami',chhath:'Chhath Puja',baisakhi:'Baisakhi',buddha:'Buddha Purnima',navratri:'Navratri',dussehra:'Dussehra',republicday:'Republic Day',independenceday:'Independence Day',gandhijayanti:'Gandhi Jayanti',constitutionday:'Constitution Day',nationalunityday:'National Unity Day',nationalyouthday:'National Youth Day',votersday:'National Voters’ Day',scienceday:'National Science Day',technologyday:'National Technology Day',kargilvijaydiwas:'Kargil Vijay Diwas',sportsday:'National Sports Day',teachersday:'Teachers’ Day',hindidiwas:'Hindi Diwas',airforceday:'Indian Air Force Day',educationday:'International Education Day',childrensday:'Children’s Day',armyday:'Indian Army Day',navyday:'Indian Navy Day',ambedkarjayanti:'Ambedkar Jayanti',girlchildday:'National Girl Child Day'};
+ const title=labels[id]||'Celebration';
+ svg.innerHTML=`<g class="drone-fleet">${drones}</g>`;
+ svg.setAttribute('aria-hidden','true');
+ if(stage)stage.setAttribute('aria-label',`${title} themed animated drone light show`);
+ const caption=$('droneShowCaption');if(caption)caption.textContent=`A sky full of ${title} magic`;
+ if(stage){
+  stage.dataset.occasion=id;
+  const viewportWidth=window.innerWidth||stage.getBoundingClientRect().width;
+  const bucket=viewportWidth<=600?'mobile':viewportWidth<=1000?'tablet':'desktop';
+  stage.dataset.droneBucket=bucket;
+  if(!stage.__droneResizeHandler){
+   stage.__droneResizeHandler=()=>{const width=window.innerWidth||stage.getBoundingClientRect().width;const next=width<=600?'mobile':width<=1000?'tablet':'desktop';if(next!==stage.dataset.droneBucket)renderOccasionDroneShow(stage.dataset.occasion||id);};
+   window.addEventListener('resize',stage.__droneResizeHandler,{passive:true});
   }
-  (costume.hands||[]).forEach((symbol,handIndex)=>{
-   const prop=document.createElement('span');
-   prop.className=`seasonal-accessory accessory-hand accessory-hand-${handIndex===0?'left':'right'}`;
-   prop.textContent=symbol;
-   prop.setAttribute('aria-hidden','true');
-   prop.style.setProperty('--prop-delay',`${(index*0.35)+(handIndex*0.22)}s`);
-   person.appendChild(prop);
-  });
- });
+  if(!stage.__droneVisibilityObserver && 'IntersectionObserver' in window){
+   stage.__droneVisibilityObserver=new IntersectionObserver(entries=>{
+    for(const entry of entries)stage.classList.toggle('is-visible',entry.isIntersecting);
+   },{threshold:.05});
+   stage.__droneVisibilityObserver.observe(stage);
+  } else if(!('IntersectionObserver' in window)){stage.classList.add('is-visible');}
+ }
 }
 
 function applyFestivalMotion(id){
@@ -218,18 +210,16 @@ function applyFestivalMotion(id){
  art.dataset.motion=motion;
  art.dataset.motionTheme=id;
  art.innerHTML=Array.from({length:particleCount},(_,i)=>`<span class="motion-particle particle-${i%7}" aria-hidden="true" style="--particle-delay:${(i%17)*-.57}s;--particle-x:${(i*41+7)%96}%;--particle-size:${motion==='snow'?10+(i%7)*3:12+(i%6)*4}px;--particle-duration:${motion==='snow'?7+(i%8):5+(i%7)}s;--particle-drift:${((i%5)-2)*13}px">${particleSymbols[i%particleSymbols.length]}</span>`).join('');
- applyCharacterCostumes(id);
+ renderOccasionDroneShow(id);
  const preview=$('wishPreview'); if(preview){preview.classList.remove('occasion-arrive');void preview.offsetWidth;preview.classList.add('occasion-arrive');}
  const card=$('heroIllustration');if(card){
-  const profile=characterCelebrationProfiles[id]||'sparkle';
-  card.dataset.celebration=profile;
   card.dataset.occasion=id;
   card.style.setProperty('--occasion-glow',getComputedStyle(document.body).getPropertyValue('--accent').trim()||'#e7c47b');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  card.classList.remove('illustration-arrive','celebration-change');
-  if(!reduced){void card.offsetWidth;card.classList.add('illustration-arrive','celebration-change');}
-  const speech=$('characterSpeech');
-  if(speech){speech.dataset.occasion=id;}
+  card.classList.remove('illustration-arrive');
+  if(!reduced){void card.offsetWidth;card.classList.add('illustration-arrive');}
+  const droneCaption=$('droneShowCaption');
+  if(droneCaption){droneCaption.dataset.occasion=id;}
  }
 }
 
@@ -778,9 +768,8 @@ function setPhoto(file){
 }
 function scrollToCreate(id){setTheme(id,{manual:true});$('occasionSelect').value=id;updatePreview();$('create').scrollIntoView({behavior:'smooth',block:'start'});}
 function bindEvents(){document.querySelectorAll('#categoryFilters [data-filter]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#categoryFilters [data-filter]').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',String(b===btn));});renderOccasions(btn.dataset.filter)}));$('occasionGrid').addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(card)scrollToCreate(card.dataset.id)});$('occasionSelect').addEventListener('change',e=>{generatedWishContext='';setTheme(e.target.value);updatePreview()});['languageSelect','toneSelect','wishLength'].forEach(id=>$(id).addEventListener('change',()=>{generatedWishContext='';updatePreview()}));if($('letteringStyle'))$('letteringStyle').addEventListener('change',updatePreview);['recipientName','senderName','customMessage'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='customMessage'){$('charCount').textContent=`${$('customMessage').value.length} / 280`;if(!$('customMessage').value.trim())generatedWishContext='';}updatePreview()}));$('cardStyleGrid').addEventListener('click',e=>{const btn=e.target.closest('[data-style-id]');if(btn){setCardStyle(btn.dataset.styleId);updatePreview();}});$('photoInput').addEventListener('change',e=>setPhoto(e.target.files&&e.target.files[0]));$('removePhoto').addEventListener('click',()=>{photoDataUrl='';$('photoInput').value='';$('photoStatus').hidden=true;$('removePhoto').hidden=true;$('previewPhoto').hidden=true;updatePreview();toast('Photo removed.')});$('wishForm').addEventListener('submit',e=>{e.preventDefault();if(!$('customMessage').value.trim())generateFreshWish();else updatePreview();$('previewHelp').textContent=$('customMessage').value.trim()?'Your personal message is ready. Download it as a PNG or share it with someone special.':'A fresh wish is ready. Download it as a PNG or share it with someone special.';$('statusMessage').textContent='Your personalized greeting is ready.';$('wishPreview').scrollIntoView({behavior:'smooth',block:'nearest'})});$('regenerateWish').addEventListener('click',generateFreshWish);$('downloadCard').addEventListener('click',downloadCard);$('shareCard').addEventListener('click',shareCard);const changeCalendarMonth=(offset)=>{calendarDate=new Date(calendarDate.getFullYear(),calendarDate.getMonth()+offset,1);selectedDateKey='';renderCalendar();renderCalendarSelection('')};$('prevMonth').addEventListener('click',()=>changeCalendarMonth(-1));$('nextMonth').addEventListener('click',()=>changeCalendarMonth(1));$('todayMonth').addEventListener('click',()=>{calendarDate=new Date(today.getFullYear(),today.getMonth(),1);selectedDateKey=getLocalDateKey(today);renderCalendar();renderCalendarSelection(selectedDateKey)});$('calendarGrid').addEventListener('click',e=>{const cell=e.target.closest('[data-date]');if(cell)handleCalendarDate(cell.dataset.date)});$('calendarSelection').addEventListener('click',e=>{const create=e.target.closest('[data-calendar-create]');if(create){scrollToCreate(create.dataset.calendarCreate);return;}if(e.target.closest('[data-calendar-explore]')){renderOccasions('all');$('explore').scrollIntoView({behavior:'smooth',block:'start'});}});$('upcomingList').addEventListener('click',e=>{const btn=e.target.closest('[data-id]');if(btn)scrollToCreate(btn.dataset.id)});$('showAllDates').addEventListener('click',()=>{renderOccasions('all');$('explore').scrollIntoView({behavior:'smooth'})});$('menuToggle').addEventListener('click',()=>{const nav=$('mainNav');const open=nav.classList.toggle('open');$('menuToggle').setAttribute('aria-expanded',String(open));$('menuToggle').textContent=open?'×':'☰'});document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>{$('mainNav').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false');$('menuToggle').textContent='☰'}));window.addEventListener('scroll',()=>document.querySelector('.site-header').classList.toggle('scrolled',window.scrollY>10),{passive:true});}
-function initFeatureTicker(){const title=$('tickerFeature'),time=$('tickerTime');if(!title||!time)return;const features=['Personalized wishes in 3 languages','20 cinematic greeting-card styles','Download and share your own card','Festival calendar with upcoming dates','Photos stay on your device','Fresh wishes with fewer repeats'];let index=0;const featureTimers=new WeakMap();const speak=()=>{const bubble=$('characterSpeech');if(bubble)bubble.textContent=features[index];document.querySelectorAll('.hero-character').forEach(person=>{person.classList.remove('is-speaking');void person.offsetWidth;person.classList.add('is-speaking');const old=featureTimers.get(person);if(old)clearTimeout(old);featureTimers.set(person,setTimeout(()=>person.classList.remove('is-speaking'),1350));});};const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const paint=()=>{if(!reducedMotion)title.animate?.([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(4px)'}],{duration:160,fill:'forwards'});setTimeout(()=>{index=(index+1)%features.length;title.textContent=features[index];time.textContent=`${String(index+1).padStart(2,'0')} / ${String(features.length).padStart(2,'0')}`;speak();if(!reducedMotion)title.animate?.([{opacity:0,transform:'translateY(-4px)'},{opacity:1,transform:'translateY(0)'}],{duration:240,fill:'forwards'});},reducedMotion?0:165)};time.textContent=`01 / ${String(features.length).padStart(2,'0')}`;speak();window.setInterval(()=>{if(document.visibilityState==='visible')paint();},5000);}
-function initCharacterInteractions(){const scene=$('heroIllustration');if(!scene)return;scene.querySelectorAll('.hero-character').forEach(person=>person.addEventListener('click',()=>{const waving=person.classList.contains('is-waving');if(waving)return;person.classList.add('is-waving');person.setAttribute('aria-pressed','true');window.setTimeout(()=>{person.classList.remove('is-waving');person.setAttribute('aria-pressed','false')},1600);const bubble=$('characterSpeech');if(bubble){bubble.textContent='Let’s make your next greeting special!';bubble.classList.remove('speech-pop');void bubble.offsetWidth;bubble.classList.add('speech-pop');}}));}
-function init(){ $('yearNow').textContent=new Date().getFullYear();const automatic=getDateForAutomaticTheme();let savedOccasion='';try{savedOccasion=sessionStorage.getItem('wishingasr-selected-theme')||sessionStorage.getItem('deepotsav-selected-theme')||'';}catch(e){}const requestedOccasion=new URLSearchParams(window.location.search).get('occasion');const explicit=!!(requestedOccasion&&catalog[requestedOccasion]||savedOccasion&&catalog[savedOccasion]);const isHome=['/','/index.html'].includes(window.location.pathname.replace(/\/+$/,'')||'/');let initial=automatic;if(!explicit&&isHome)initial='diwali';if(savedOccasion&&catalog[savedOccasion])initial=savedOccasion;if(requestedOccasion&&catalog[requestedOccasion])initial=requestedOccasion;activeId=initial;renderOccasions();fillSelect();renderStylePicker();setTheme(initial,{manual:false,updateTitle:explicit||!isHome});if(isHome&&!explicit){$('heroEyebrow').textContent='MAKE EVERY OCCASION SPECIAL';$('heroTitle').innerHTML='Make every<br><em>occasion special.</em>';$('heroDescription').textContent='Beautiful wishes, cinematic greeting cards and meaningful words for every festival, milestone and little moment.';document.title='WishingASR | Personalized Wishes & Greeting Cards for Every Occasion';document.body.dataset.homeIntro='true';document.querySelectorAll('.occasion-card').forEach(card=>{card.classList.remove('selected');card.setAttribute('aria-pressed','false')});}initFeatureTicker();initCharacterInteractions();bindEvents();selectedDateKey=getLocalDateKey(today);renderCalendar();renderCalendarSelection(selectedDateKey);renderUpcoming();updatePreview();if(window.location.pathname.replace(/\/+$/,'')==='/create'){setTimeout(()=>$('create').scrollIntoView({behavior:'auto',block:'start'}),80);}}
+function initFeatureTicker(){const title=$('tickerFeature'),time=$('tickerTime');if(!title||!time)return;const features=['Occasion-themed drone light shows','Personalized wishes in 3 languages','20 cinematic greeting-card styles','Download and share your own card','Festival calendar with upcoming dates','Photos stay on your device','Fresh wishes with fewer repeats'];let index=0;const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const paint=()=>{if(!reducedMotion)title.animate?.([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(4px)'}],{duration:160,fill:'forwards'});setTimeout(()=>{index=(index+1)%features.length;title.textContent=features[index];time.textContent=`${String(index+1).padStart(2,'0')} / ${String(features.length).padStart(2,'0')}`;if(!reducedMotion)title.animate?.([{opacity:0,transform:'translateY(-4px)'},{opacity:1,transform:'translateY(0)'}],{duration:240,fill:'forwards'});},reducedMotion?0:165)};time.textContent=`01 / ${String(features.length).padStart(2,'0')}`;window.setInterval(()=>{if(document.visibilityState==='visible')paint();},5000);}
+function init(){ $('yearNow').textContent=new Date().getFullYear();const automatic=getDateForAutomaticTheme();let savedOccasion='';try{savedOccasion=sessionStorage.getItem('wishingasr-selected-theme')||sessionStorage.getItem('deepotsav-selected-theme')||'';}catch(e){}const requestedOccasion=new URLSearchParams(window.location.search).get('occasion');const explicit=!!(requestedOccasion&&catalog[requestedOccasion]||savedOccasion&&catalog[savedOccasion]);const isHome=['/','/index.html'].includes(window.location.pathname.replace(/\/+$/,'')||'/');let initial=automatic;if(!explicit&&isHome)initial='diwali';if(savedOccasion&&catalog[savedOccasion])initial=savedOccasion;if(requestedOccasion&&catalog[requestedOccasion])initial=requestedOccasion;activeId=initial;renderOccasions();fillSelect();renderStylePicker();setTheme(initial,{manual:false,updateTitle:explicit||!isHome});if(isHome&&!explicit){$('heroEyebrow').textContent='MAKE EVERY OCCASION SPECIAL';$('heroTitle').innerHTML='Make every<br><em>occasion special.</em>';$('heroDescription').textContent='Beautiful wishes, cinematic greeting cards and meaningful words for every festival, milestone and little moment.';document.title='WishingASR | Personalized Wishes & Greeting Cards for Every Occasion';document.body.dataset.homeIntro='true';document.querySelectorAll('.occasion-card').forEach(card=>{card.classList.remove('selected');card.setAttribute('aria-pressed','false')});}initFeatureTicker();bindEvents();selectedDateKey=getLocalDateKey(today);renderCalendar();renderCalendarSelection(selectedDateKey);renderUpcoming();updatePreview();if(window.location.pathname.replace(/\/+$/,'')==='/create'){setTimeout(()=>$('create').scrollIntoView({behavior:'auto',block:'start'}),80);}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 // v21: accessible mobile navigation dismissal for touch, keyboard, and outside clicks.
 (()=>{

@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '63'
+VERSION = '65'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -90,11 +90,11 @@ for path in sorted(ROOT.glob('*.html')):
         errors.append(f'{path.name}: expected exactly one twitter:card declaration')
 
 # JavaScript syntax and deterministic tools runtime regression suite.
-for script in ('app.js','tools.js','growth.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs'):
+for script in ('app.js','tools.js','growth.js','qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs'):
     if script.endswith(('.js','.cjs')):
         result = subprocess.run(['node','--check',str(ROOT/script)],capture_output=True,text=True)
         if result.returncode: errors.append(f'{script}: syntax error: {result.stderr.strip()}')
-for script in ('qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs'):
+for script in ('qa_canvas_layout.cjs','qa_tools_runtime.cjs','qa_calendar_runtime.cjs','qa_calendar_data_runtime.cjs','qa_growth_runtime.cjs','qa_drone_runtime.cjs'):
     result = subprocess.run(['node',str(ROOT/script)],capture_output=True,text=True)
     if result.returncode: errors.append(f'{script}: failed: {result.stderr.strip()}')
 
@@ -138,19 +138,29 @@ for required_function in ('function renderOccasions(', 'function fillSelect('):
     if required_function not in app:
         errors.append(f'app.js: critical startup function missing: {required_function}')
 
-# v58 production character fallback and AA Group brand integrity.
+# v65 occasion drone light show and AA Group brand integrity.
 index = (ROOT/'index.html').read_text(encoding='utf-8')
 styles = (ROOT/'styles.css').read_text(encoding='utf-8')
-if 'id="heroIllustration"' not in index: errors.append('index.html: original character stage is missing')
-if 'assets/hero-boy-full.webp' not in index or 'assets/hero-girl-full.webp' not in index:
-    errors.append('index.html: original character artwork is missing')
-if 'rigged-characters.js' in index: errors.append('index.html: experimental 3D renderer should remain disabled until visually verified')
-if 'rigged-characters.js' in config.get('headers',{}).__str__(): errors.append('vercel.json: stale 3D module cache rule remains')
-if '#heroIllustration .hero-character{' not in styles or 'opacity:1!important' not in styles: errors.append('styles.css: character visibility fallback rule is missing')
+if 'id="heroIllustration"' not in index: errors.append('index.html: occasion drone stage is missing')
+if 'id="occasionDroneShow"' not in index: errors.append('index.html: drone SVG mount is missing')
+if 'hero-boy-full.webp' in index or 'hero-girl-full.webp' in index:
+    errors.append('index.html: character artwork should be removed from homepage hero')
+if 'rigged-characters.js' in index: errors.append('index.html: experimental 3D renderer should remain disabled')
+if 'renderOccasionDroneShow(id)' not in app: errors.append('app.js: drone show is not refreshed when occasion changes')
+if 'const shapes={' not in app: errors.append('app.js: occasion formation map is missing')
+if '.occasion-drone-svg' not in styles or '.drone-light' not in styles:
+    errors.append('styles.css: drone show styling is missing')
 for page in sorted(ROOT.glob('*.html')):
     html=page.read_text(encoding='utf-8')
     if 'AA Group. All rights reserved.' not in html: errors.append(f'{page.name}: missing AA Group copyright')
     if 'WishingASR is a product of' not in html: errors.append(f'{page.name}: missing AA Group product attribution')
+
+# Occasion-themed drone light show replaces character art in homepage hero.
+home_html=(ROOT/'index.html').read_text(encoding='utf-8')
+if 'occasionDroneShow' not in home_html or 'drone-show-stage' not in home_html:
+    errors.append('Homepage hero: missing occasion drone show')
+if 'hero-boy-full.webp' in home_html or 'hero-girl-full.webp' in home_html:
+    errors.append('Homepage hero: old character artwork still present')
 
 # AS public profile portrait and AA Group ownership.
 if not (ROOT/'assets/as-owner-profile.webp').exists():
@@ -160,24 +170,24 @@ for profile_page in ('index.html','about.html','aa-group.html'):
     if 'assets/as-owner-profile.webp' not in profile_html:
         errors.append(f'{profile_page}: AS owner portrait is not displayed')
 
-# Occasion-specific character props and particle direction regressions.
+# Occasion-specific drone formations and motion preferences.
 for marker in [
-    'function applyCharacterCostumes(',
-    "diwali:{hands:['🪔','🪔']",
-    "christmas:{hands:['🎁','🔔'],hat:'santa'",
-    "const fallMotion={christmas:'snow'",
-    "art.dataset.motion=motion",
+    'function renderOccasionDroneShow(id)',
+    'diwali:diya',
+    'christmas:tree',
+    'eid:crescent',
+    'newyear:fireworks',
+    'republicday:tricolourFlag',
+    'renderOccasionDroneShow(id)',
 ]:
-    if marker not in app: errors.append(f'seasonal scenes: missing app.js marker {marker}')
-styles = (ROOT/'styles.css').read_text(encoding='utf-8')
+    if marker not in app: errors.append(f'drone show: missing app.js marker {marker}')
 for marker in [
-    '@keyframes festival-fall',
-    '.hero-character-stage[data-occasion="diwali"] .accessory-hand',
-    '.hero-character .accessory-hat{',
-    '@keyframes seasonal-hand-bob',
+    '.drone-show-stage',
+    '.occasion-drone-svg',
+    '@keyframes drone-hover',
     '@media(prefers-reduced-motion:reduce)',
 ]:
-    if marker not in styles: errors.append(f'seasonal scenes: missing CSS marker {marker}')
+    if marker not in styles: errors.append(f'drone show: missing CSS marker {marker}')
 for marker in [
     "date:'2027-05-20'",  # Buddha Purnima (India, 2027)
     "dates:['2026-11-08','2027-10-29']",  # Diwali 2026 and 2027
@@ -235,7 +245,7 @@ for slug in ('diwali-wishes', 'birthday-wishes', 'christmas-wishes', 'holi-wishe
         content=page.read_text(encoding='utf-8')
         for token in ('rel="canonical"','name="description"','property="og:title"','copy-wish','wish-share-inline','href="/create?occasion='):
             if token not in content: errors.append(f'{page.name}: missing guide feature {token}')
-if 'growth.js?v=63' not in (ROOT/'index.html').read_text(encoding='utf-8'):
+if 'growth.js?v=65' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing growth helper script')
 if '"@type":"Organization"' not in (ROOT/'index.html').read_text(encoding='utf-8') or 'AA Group' not in (ROOT/'index.html').read_text(encoding='utf-8'):
     errors.append('index.html: missing AA Group Organization structured data')

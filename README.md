@@ -1,11 +1,18 @@
-# WishingASR v59 — AA Group
+# WishingASR v65 — AA Group Drone Light Show Release
 
-WishingASR is a product of AA Group. This static site includes personalised wishes in English, Hindi and Hinglish, 20 greeting-card styles, local photo processing, PNG export, occasion calendar, creative tools, SEO guide pages, social sharing and a dedicated AA Group company page.
+WishingASR is a digital product of AA Group. This static site includes personalised wishes in English, Hindi and Hinglish, 20 greeting-card styles, local photo processing, PNG export, an occasion calendar, creative tools, SEO guide pages, social sharing, a dedicated AA Group company page, and a responsive occasion-themed drone light show in place of the former homepage character illustrations.
 
 ## AA Group page
 - Public route: `/aa-group`
-- Owner display name: `AS` (AS public owner profile with optimized portrait; no portrait displayed)
-- Existing team portraits are compact and scaled by their stated roles.
+- Owner display: `AS` with the approved public profile portrait.
+- Existing team portraits remain compact and scaled by their stated roles.
+
+## Drone light show
+- 45 occasion/national-day formations are covered by the drone renderer.
+- Formation updates when users select a new occasion.
+- Mobile, tablet and desktop point limits are applied, with responsive re-rendering after resize.
+- Drone animations pause when the hero is outside the viewport and respect reduced-motion preferences.
+- The light show is a browser-based SVG animation, not a real drone-control system.
 
 ## Local preview
 - Windows: run `START_LOCAL_PREVIEW.bat`.

@@ -5217,3 +5217,206 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
   .site-header nav a,.creator-panel *,.preview-column *{scroll-behavior:auto;transition-duration:.01ms!important}
 }
+
+
+/* v64 — all-occasion character accessory anchoring */
+.hero-character{overflow:visible}
+.hero-character .seasonal-accessory{
+  position:absolute;
+  z-index:10;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  user-select:none;
+  line-height:1;
+  transform-origin:50% 85%;
+}
+.hero-character .accessory-hand{
+  width:clamp(20px,2.7vw,32px);
+  height:clamp(20px,2.7vw,32px);
+  font-size:clamp(17px,2.05vw,24px);
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.26));
+  animation:seasonal-prop-follow 4.8s ease-in-out infinite;
+  animation-delay:var(--prop-delay,0s);
+}
+.hero-character-boy .accessory-hand-left{left:5.5%;right:auto;top:23%}
+.hero-character-boy .accessory-hand-right{right:7.5%;left:auto;top:32%}
+.hero-character-girl .accessory-hand-left{left:8%;right:auto;top:28%}
+.hero-character-girl .accessory-hand-right{right:7%;left:auto;top:24%}
+@keyframes seasonal-prop-follow{
+  0%,100%{translate:0 0;rotate:-2deg}
+  50%{translate:0 -2px;rotate:2deg}
+}
+/* Keep props visually attached without overpowering the character art. */
+.hero-character-stage .accessory-hand,
+.hero-character-stage[data-occasion] .accessory-hand{
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.28));
+}
+.hero-character-stage[data-occasion="diwali"] .accessory-hand{
+  filter:drop-shadow(0 0 3px rgba(255,176,63,.42)) drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+.hero-character-stage[data-occasion="christmas"] .accessory-hand{
+  filter:drop-shadow(0 0 2px rgba(225,245,255,.28)) drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+/* Smaller hats that sit over the hairline instead of covering the face. */
+.hero-character .accessory-hat{
+  top:2.5%;
+  left:45%;
+  width:0;
+  height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-bottom:23px solid #d52f40;
+  transform:rotate(13deg);
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.22));
+}
+.hero-character .accessory-hat::before{
+  width:7px;height:7px;right:-10px;top:-3px;
+}
+.hero-character .accessory-hat::after{
+  width:23px;height:5px;left:-11.5px;bottom:-24px;
+}
+.hero-character-girl .accessory-hat{left:47%;top:3%;transform:rotate(10deg) scale(.9)}
+.hero-character .accessory-hat-santa{
+  top:2%;
+  left:44%;
+  width:22px;height:26px;
+  border:0;
+  border-radius:2px 2px 1px 1px;
+  background:linear-gradient(145deg,#f05a62 0%,#c9233d 75%,#a71935 100%);
+  clip-path:polygon(48% 0,100% 100%,0 100%);
+  transform:rotate(13deg);
+}
+.hero-character .accessory-hat-santa::before{
+  content:"";position:absolute;width:7px;height:7px;right:-1px;top:-1px;
+  border-radius:50%;background:#fff;
+}
+.hero-character .accessory-hat-santa::after{
+  content:"";position:absolute;width:24px;height:5px;left:-1px;bottom:-1px;
+  border-radius:99px;background:linear-gradient(#fff,#e8e8e8);
+}
+.hero-character-girl .accessory-hat-santa{left:47%;top:2.5%;transform:rotate(10deg) scale(.9)}
+.hero-character .accessory-hat-party{
+  border-bottom-color:#efb94f;
+  transform:rotate(10deg) scale(.9);
+}
+@media(max-width:800px){
+  .hero-character .accessory-hand{width:25px;height:25px;font-size:19px}
+  .hero-character-boy .accessory-hand-left{left:5%;top:24%}
+  .hero-character-boy .accessory-hand-right{right:7%;top:32%}
+  .hero-character-girl .accessory-hand-left{left:7%;top:28%}
+  .hero-character-girl .accessory-hand-right{right:7%;top:25%}
+  .hero-character .accessory-hat{border-left-width:9px;border-right-width:9px;border-bottom-width:21px}
+  .hero-character .accessory-hat-santa{width:20px;height:24px}
+}
+@media(max-width:560px){
+  .hero-character .accessory-hand{width:20px;height:20px;font-size:16px}
+  .hero-character-boy .accessory-hand-left{left:4%;top:24%}
+  .hero-character-boy .accessory-hand-right{right:5%;top:32%}
+  .hero-character-girl .accessory-hand-left{left:6%;top:28%}
+  .hero-character-girl .accessory-hand-right{right:5%;top:25%}
+  .hero-character .accessory-hat-santa{width:17px;height:21px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-character .seasonal-accessory{animation:none!important;translate:0 0!important}
+}
+
+
+/* v65 — occasion-themed drone light show replaces character artwork */
+.hero-art{min-height:clamp(340px,39vw,500px);display:grid;place-items:center;overflow:hidden}
+.drone-show-stage{
+  position:relative!important;
+  isolation:isolate;
+  width:100%!important;
+  min-height:clamp(300px,36vw,450px)!important;
+  height:auto;
+  display:grid!important;
+  place-items:center;
+  overflow:hidden!important;
+  border-radius:28px;
+  background:
+    radial-gradient(ellipse at 50% 48%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 55%),
+    linear-gradient(180deg,rgba(6,12,28,.10),rgba(6,12,28,.35));
+}
+.drone-show-backdrop{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(circle at 18% 25%,rgba(255,255,255,.12) 0 1px,transparent 2px),
+   radial-gradient(circle at 76% 18%,rgba(255,255,255,.14) 0 1px,transparent 2px),
+   radial-gradient(circle at 83% 72%,rgba(255,255,255,.12) 0 1px,transparent 2px),
+   radial-gradient(ellipse at center,color-mix(in srgb,var(--accent) 7%,transparent),transparent 70%);
+}
+.occasion-drone-svg{
+  display:block;
+  width:min(100%,850px);
+  height:auto;
+  max-height:clamp(270px,34vw,410px);
+  overflow:visible;
+  margin:0 auto;
+  filter:drop-shadow(0 0 14px color-mix(in srgb,var(--accent) 18%,transparent));
+}
+.drone-link{
+  stroke:color-mix(in srgb,var(--accent) 20%,transparent);
+  stroke-width:1.25;
+  stroke-dasharray:3 8;
+  opacity:.28;
+}
+.drone-unit{transform-box:fill-box;transform-origin:center;animation:drone-hover 3.2s ease-in-out infinite;animation-delay:var(--drone-delay)}
+.drone-halo{fill:var(--drone-color);opacity:.16;filter:blur(3px);animation:drone-pulse 2.8s ease-in-out infinite;animation-delay:var(--drone-delay)}
+.drone-light{fill:var(--drone-color);stroke:rgba(255,255,255,.9);stroke-width:1.2;filter:drop-shadow(0 0 5px var(--drone-color));}
+@keyframes drone-hover{0%,100%{translate:0 0;scale:1}50%{translate:0 -3px;scale:1.04}}
+@keyframes drone-pulse{0%,100%{opacity:.12;r:8}50%{opacity:.38;r:13}}
+.drone-show-caption{
+  position:absolute;left:50%;bottom:44px;transform:translateX(-50%);
+  width:max-content;max-width:86%;padding:10px 16px;
+  border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);
+  border-radius:999px;background:rgba(8,14,29,.68);
+  color:var(--text);font-size:clamp(10px,1vw,13px);font-weight:650;
+  text-align:center;backdrop-filter:blur(14px);
+}
+.drone-show-meta{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:8px;font-weight:800;letter-spacing:.18em;
+  white-space:nowrap;
+}
+.drone-live-dot{width:7px;height:7px;border-radius:50%;background:#72e3b0;box-shadow:0 0 12px #72e3b0}
+.hero-character-stage.illustration-arrive .occasion-drone-svg{animation:drone-arrive .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes drone-arrive{from{opacity:.35;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@media(max-width:800px){
+ .hero-art{min-height:320px}
+ .drone-show-stage{min-height:310px!important;border-radius:22px}
+ .occasion-drone-svg{width:100%;max-height:285px}
+ .drone-show-caption{bottom:24px}
+}
+@media(max-width:480px){
+ .hero-art{min-height:270px}
+ .drone-show-stage{min-height:260px!important;border-radius:18px}
+ .occasion-drone-svg{max-height:230px}
+ .drone-show-meta{top:12px;font-size:7px;letter-spacing:.12em}
+ .drone-show-caption{bottom:16px;padding:8px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .drone-unit,.drone-halo,.hero-character-stage.illustration-arrive .occasion-drone-svg{animation:none!important}
+}
+
+
+/* v65 final polish — lightweight drone formation, visibility-aware motion */
+.drone-show-stage .drone-unit,
+.drone-show-stage .drone-halo{animation-play-state:paused}
+.drone-show-stage.is-visible .drone-unit,
+.drone-show-stage.is-visible .drone-halo{animation-play-state:running}
+.drone-show-stage .drone-unit{transform-box:fill-box;transform-origin:center;will-change:transform}
+.drone-show-stage .drone-light{stroke-width:1;filter:drop-shadow(0 0 3px var(--drone-color))}
+.drone-show-stage .drone-halo{opacity:.13;filter:blur(2px)}
+.drone-show-stage .drone-link{display:none}
+.drone-show-stage .drone-fleet{shape-rendering:geometricPrecision}
+@media(prefers-reduced-motion:reduce){
+ .drone-show-stage .drone-unit,.drone-show-stage .drone-halo{animation:none!important;will-change:auto}
+}
+/* v65 final animation tuning: keep formation geometry locked while lights pulse. */
+.drone-show-stage .drone-unit{will-change:auto;animation-duration:4.2s}
+.drone-show-stage .drone-halo{transform-box:fill-box;transform-origin:center;animation-duration:3.4s}
+@keyframes drone-hover{0%,100%{transform:scale(.98);opacity:.94}50%{transform:scale(1.035);opacity:1}}
+@keyframes drone-pulse{0%,100%{opacity:.10;transform:scale(.78)}50%{opacity:.30;transform:scale(1.18)}}
+@media(prefers-reduced-motion:reduce){.hero-art::before,.hero-art::after{animation:none!important}.drone-show-stage .drone-unit,.drone-show-stage .drone-halo{animation:none!important;will-change:auto}}

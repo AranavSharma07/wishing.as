@@ -1,19 +1,31 @@
-# WishingASR v63 — Navigation & Wish Form Overlap Fix
+# WishingASR v65 — Occasion Drone Light Show (Final Polish)
 
-## Fixes based on the supplied v61 screenshot
-- Prevented the Home navigation item from colliding with the WishingASR brand.
-- Added a compact navigation mode below 1280px using the existing hamburger menu and `.open` state.
-- Kept the desktop navigation in its own flex area with non-overlapping brand and nav regions.
-- Rebuilt the wish creator form grid with explicit minmax(0,1fr) columns, full-width controls and safe box sizing.
-- Switched the form to a single-column field layout on narrow mobile screens.
-- Improved the occasion selector step layout to prevent label/control squeezing.
-- Kept preview column responsive and prevented horizontal overflow.
-- Standardized local CSS/JS cache query versions to v63.
+## Drone-show refinements from the complete v65 audit
+- Replaced the original dot-to-dot wireframe links with clean, isolated drone lights.
+- Added a dedicated Raksha Bandhan formation rather than falling back to a generic star.
+- Corrected captions to use friendly occasion names rather than raw IDs.
+- Added individual colour palettes and formation mappings for all 45 occasion/national-day animation themes.
+- Added themed formations for Diwali, Christmas, Holi, Eid, New Year, birthdays, weddings, Valentine's occasions, Raksha Bandhan, harvest festivals, national days and more.
+- Added responsive drone-point limits: 24 mobile, 34 tablet, 52 desktop.
+- Added viewport-resize handling to redraw at the correct point limit.
+- Pauses drone animations when the hero leaves the viewport and respects reduced-motion preferences.
+- Updated accessibility: the SVG is decorative and the parent stage receives the current occasion-specific accessible name.
+- Removed the unused former homepage character images from deployed assets.
+- Removed obsolete character caption/prop hooks and updated the local preview server label.
+
+## Performance and cache delivery
+- Kept the public release version at v65.
+- Set local asset query strings to `v=65.1` to avoid immutable-cache reuse of the earlier v65 build while preserving the public version number.
+- Kept the drone fleet under 24 points on phones and 34 on tablets, with a 52-point desktop cap.
+- Pauses per-drone animations while the stage is outside the viewport.
 
 ## Preserved
-- All previous pages, AA Group branding, AS portrait, 20 card styles, 9 tools, character illustrations, seasonal themes, calendar, wish generation, photo upload, PNG export and sharing.
+- Existing pages, SEO guides, AA Group/AS profile, wish builder, calendar, 20 greeting-card styles, 9 creative tools, sharing and PNG export.
 
 ## Validation
-- Existing static and runtime regression suites retained and run.
-- CSS parsing and ZIP integrity checked.
-- Browser-driven visual testing and physical-device verification remain necessary.
+- Static HTML/SEO/accessibility/route checks pass.
+- Calendar, canvas, tools, growth/share, calendar-data, and new drone rendering runtime suites pass.
+- CSS parser reports zero syntax errors.
+- Local HTTP smoke tests return 200 for all 18 friendly routes and key assets; invalid route returns 404.
+- Archive integrity verified.
+- Browser-rendered screenshot testing is blocked by the environment administrator policy; physical device verification remains necessary.
