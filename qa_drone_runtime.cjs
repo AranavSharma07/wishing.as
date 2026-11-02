@@ -101,7 +101,7 @@ assert(mobile.stage.dataset.droneBucket==='desktop' && resizedCount<=52 && resiz
 const stylesheet=fs.readFileSync(__dirname + '/styles.css','utf8');
 assert(app.includes('@keyframes drone-formation-enter') || stylesheet.includes('@keyframes drone-formation-enter'), 'staggered formation entrance animation must be present');
 for(const id of occasionIds) assert(stylesheet.includes(`@keyframes drone-${id}-enter`), `${id}: unique CSS flight animation must exist`);
-const profileBlock=app.match(/const flightProfiles=\{([\s\S]*?)\n \};\n const flight=/);
+const profileBlock=app.match(/const flightProfiles=\{([\s\S]*?)\n \};\n const baseFlight=/);
 assert(profileBlock, 'complete occasion flight profile map must exist');
 const profileKeys=[...profileBlock[1].matchAll(/^\s*([a-z][a-z0-9]*):\{/gm)].map(m=>m[1]);
 for(const id of occasionIds) assert(profileKeys.includes(id), `${id}: unique event flight profile must exist`);

@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '65.8'
+VERSION = '65.11'
 ROUTES = {
     '/create': '/index.html', '/quotes': '/quotes.html',
     '/national-days': '/national-days.html', '/blog': '/blog.html',
@@ -224,8 +224,8 @@ for marker in ["invitationReady", "captionReady", "Array.isArray(value)", "docum
 for marker in ["toolSearch", "data-copy-favorite", "$('wishOutput').lang=lang==="]:
     if marker not in tools: errors.append(f'tools.js: missing searchable/language-aware tools improvement {marker}')
 main_export = (ROOT/'app.js').read_text(encoding='utf-8')
-for marker in ["Promise.race([Promise.all(fontRequests)", "canvas.toDataURL('image/png')", "typeof canvas.toBlob!=='function'"]:
-    if marker not in main_export: errors.append(f'app.js: missing robust card export fallback {marker}')
+for marker in ["Promise.race([warmCardFonts()", "canvas.toDataURL('image/png')", "typeof canvas.toBlob!=='function'", "setTimeout(resolve,280)", "function yieldToPaint()", "Preparing PNG…", "ctx.filter='blur(22px) saturate(1.12)'"]:
+    if marker not in main_export: errors.append(f'app.js: missing responsive card export behaviour {marker}')
 if 'id="toolSearch"' not in (ROOT/'tools.html').read_text(encoding='utf-8'):
     errors.append('tools.html: missing searchable tools control')
 

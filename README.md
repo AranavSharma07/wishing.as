@@ -1,6 +1,6 @@
 # WishingASR v65 — source package
 
-WishingASR is a static HTML/CSS/JavaScript wishes and greeting-card platform. This package preserves the public **WishingASR v65** name; `65.8` in asset URLs is only a cache-busting token.
+WishingASR is a static HTML/CSS/JavaScript wishes and greeting-card platform. This package preserves the public **WishingASR v65** name; `65.11` in asset URLs is only a cache-busting token.
 
 ## Local preview
 
@@ -10,11 +10,11 @@ WishingASR is a static HTML/CSS/JavaScript wishes and greeting-card platform. Th
 
 ## Validation
 
-Run `python qa_static.py` from this folder. It checks HTML semantics, labels, links, metadata, canonical/sitemap matching, JSON-LD syntax, Vercel routes, JavaScript syntax and the runtime regression scripts.
+Run `python qa_static.py` and `python qa_security_static.py` from this folder. The package also includes eight Node runtime regression suites and `qa_canvas_layout.cjs` for export text fitting.
 
 ## Deployment
 
-Deploy the contents of this folder to the existing Vercel project. Do not change `VERSION.txt` unless intentionally creating a separately named public release. For the SEO V2 implementation scope and limitations, read `SEO_V2_IMPLEMENTATION_REPORT.md`.
+Deploy the contents of this folder to the existing Vercel project. Do not change `VERSION.txt` unless intentionally creating a separately named public release. This build includes mobile hero simplification, more natural low-cost drone motion, compact-screen spacing and the earlier card-export response polish described in `FINAL_RELEASE_NOTES.md`. For the SEO V2 implementation scope and limitations, read `SEO_V2_IMPLEMENTATION_REPORT.md`.
 
 ## Important notes
 

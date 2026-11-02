@@ -1,0 +1,41 @@
+PASS: HTML semantics/accessibility, local links, unique SEO metadata/canonicals, sitemap coverage, JSON-LD syntax, JS syntax, card/tool exports, saved-wish backup/restore, local date planner, drone profiles, calendar regressions, Vercel routes/security/cache rules.
+PASS: 30 pages use external same-origin UI script; no executable inline scripts; buttons have explicit types; viewport/image checks pass; required security headers and immutable script cache are valid; 5 JS syntax checks pass.
+PASS: 45 occasion IDs, 45 distinct drone motifs, 45 choreography modes, unique flight profiles and named keyframes, occasion data attributes, flight offsets/delays, accessible labels, coordinate bounds, resize behaviour, and responsive point caps (20 mobile / 52 desktop).
+PASS: shared page script year labels, secondary-page mobile menu, Escape/outside close, contact mailto encoding, Tools scroll guard and no duplicate homepage menu listener.
+PASS: calendar month render, event marking, accessible selected state, event details, create action, empty-date explore action and invalid-date guard.
+PASS: 32 real catalog records, valid date keys, 2026/2027 Diwali and Chhath calendar entries, and annual fixed-date rollover.
+PASS: copy-wish and copy-page-link helpers with confirmation feedback.
+PASS: 165 wish combinations, 28 caption combinations, wish/save/remove, invitation details/copy, failed-copy feedback, corrupt storage recovery.
+PASS: reminder ICS export/validation, CRLF escaping, standalone page HTML escaping, quote PNG fallback, saved-wish export, display preference bounds and reset.
+PASS: saved-wish JSON backup/restore/deduplication and malformed-file safety; date validation/local planner/recurring ICS alarm; invitation TXT and PNG exports.
+[
+  {
+    "chars": 304,
+    "lines": 4,
+    "maxLineWidth": 732,
+    "withinSafeWidth": true
+  },
+  {
+    "chars": 240,
+    "lines": 6,
+    "maxLineWidth": 795,
+    "withinSafeWidth": true
+  },
+  {
+    "chars": 180,
+    "lines": 3,
+    "maxLineWidth": 790,
+    "withinSafeWidth": true
+  },
+  {
+    "chars": 400,
+    "lines": 10,
+    "maxLineWidth": 779,
+    "withinSafeWidth": true
+  },
+  {
+    "signatureFit": 792,
+    "signatureSize": 16,
+    "withinSafeWidth": true
+  }
+]

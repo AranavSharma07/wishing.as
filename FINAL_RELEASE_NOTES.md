@@ -1,14 +1,17 @@
-# WishingASR v65 — Final Re-audit Release Notes
+# WishingASR v65.11 — Mobile Hero & Natural Motion Polish
 
-- Preserved the public release name `WishingASR v65`.
-- Corrected the stale October 2026 calendar fallback to `Current month`; client-side calendar initialization continues to select the visitor's local month.
-- Added accessible no-JavaScript calendar guidance.
-- Added explicit button types to 29 static buttons.
-- Consolidated 33 executable inline script blocks into the deferred shared `site-ui.js`.
-- Kept homepage navigation owned by `app.js` to avoid duplicate click handlers.
-- Retained all occasion-specific drone motifs/choreography, greeting generator, Tools, saved-wish backup/restore, calendar and export functionality.
-- Repaired duplicate photo load-error handling and retained file type/size/pixel validation.
-- Retained transport and browser security headers. Did not enforce an AdSense domain-allowlist CSP because Google recommends nonce-based CSP for AdSense and static Vercel cannot generate a per-response nonce.
-- Added final static, runtime and HTTP test reports.
+## Feedback addressed
+- Reduced the height and visual weight of the drone showcase on mobile so the greeting headline, description and actions appear sooner.
+- Tightened mobile hero spacing and reduced heavy glass blur/shadow effects in the header, drone panel, note and feature ticker.
+- Kept the two primary actions in a balanced, equal-width row and improved compact-screen typography and tap-target sizing.
+- Made mobile drone formations arrive with a shorter, coordinated, low-overshoot glide; reduced mobile drone count to 20 and removed expensive per-light filters on small screens.
+- Preserved the individual celebration formations and desktop/tablet occasion-specific animation profiles.
+- Retained off-screen animation pausing and added explicit reduced-motion behavior for the new mobile motion.
+- Bumped static asset cache version to 65.11.
 
-See `QA_REPORT.md` and `SECURITY_AUDIT.md` for exact test coverage and limitations.
+## Validation
+- Run the supplied static, security and Node runtime QA suites before release.
+- Browser-based visual/Lighthouse testing and real-device performance timing are not claimed in this package; verify on the deployed Android phone after deployment.
+
+## Deployment
+Upload the contents of this folder to the existing WishingASR Vercel project. The live website will not change until this build is deployed.

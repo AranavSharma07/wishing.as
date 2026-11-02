@@ -51,7 +51,7 @@ for page in pages:
     if any("alt" not in image or "width" not in image or "height" not in image for image in audit.images):
         errors.append(f"{page.name}: image missing alt or dimensions")
     text = page.read_text(encoding="utf-8", errors="replace")
-    if text.count('src="site-ui.js?v=65.9"') != 1:
+    if text.count('src="site-ui.js?v=65.11"') != 1:
         errors.append(f"{page.name}: shared page script is missing or duplicated")
 
 config = json.loads((ROOT / "vercel.json").read_text())

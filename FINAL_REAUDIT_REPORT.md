@@ -41,3 +41,7 @@ All five provided raster assets are already WebP except the social-preview JPG. 
 - No guarantee of zero bugs or perfect operation on every device is possible without real-device and production monitoring.
 
 See `QA_REPORT.md` and `SECURITY_AUDIT.md` for detailed test and security notes.
+
+
+## Feedback polish — asset build 65.10
+The greeting-card export path now warms its fonts in the background and caps any remaining font wait at 280 ms. Download and Share controls show visible busy states, disable duplicate taps, and announce progress. Canvas export yields before starting CPU work, and the blur pass for alternative output sizes is lighter. All page asset cache tokens were bumped to `65.10`. These changes are code-level improvements; physical-device timing has not been measured.
